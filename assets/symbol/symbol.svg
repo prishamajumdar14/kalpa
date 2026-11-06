@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+  <title>KALPA door symbol</title>
+  <defs>
+    <clipPath id="q1"><rect x="0" y="0" width="100" height="100"/></clipPath>
+    <clipPath id="q2"><rect x="100" y="0" width="100" height="100"/></clipPath>
+    <clipPath id="q3"><rect x="100" y="100" width="100" height="100"/></clipPath>
+    <clipPath id="q4"><rect x="0" y="100" width="100" height="100"/></clipPath>
+    <g id="mark">
+      <circle cx="100" cy="100" r="90"/>
+      <path d="M18 100 C50 50 150 50 182 100 C150 150 50 150 18 100 Z"/>
+      <path d="M80 136 V88 C80 64 120 64 120 88 V136 Z"/>
+      <path d="M100 10 V64 M100 136 V190"/>
+    </g>
+  </defs>
+  <g id="fragment1" clip-path="url(#q1)"><use href="#mark"/></g>
+  <g id="fragment2" clip-path="url(#q2)"><use href="#mark"/></g>
+  <g id="fragment3" clip-path="url(#q3)"><use href="#mark"/></g>
+  <g id="fragment4" clip-path="url(#q4)"><use href="#mark"/></g>
+</svg>

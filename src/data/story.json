@@ -1,0 +1,4004 @@
+{
+  "version": 1,
+  "speakers": {
+    "narrator": {
+      "name": "",
+      "color": "#c9d1d6"
+    },
+    "arjun": {
+      "name": "Dr. Arjun Rao",
+      "color": "#9fd8e8"
+    },
+    "sato": {
+      "name": "Dr. Hana Sato",
+      "color": "#e8d9a8"
+    },
+    "kesav": {
+      "name": "Old Kesav",
+      "color": "#d9a679"
+    },
+    "ila": {
+      "name": "Ila",
+      "color": "#e8a3b8"
+    },
+    "archivist": {
+      "name": "The Archivist",
+      "color": "#b8c4a0"
+    },
+    "niyati": {
+      "name": "NIYATI",
+      "color": "#d8e4ff"
+    },
+    "log": {
+      "name": "Recording",
+      "color": "#a9b4c0"
+    },
+    "system": {
+      "name": "KALPA",
+      "color": "#7fe0c0"
+    }
+  },
+  "strings": {
+    "roomNames": {
+      "room1": "the dry sea",
+      "room2": "the memory plague",
+      "room3": "the dark city",
+      "room4": "the quiet world"
+    },
+    "roomListJoiner": ", then ",
+    "prologueNote": "Cinematic coming soon",
+    "choiceLog": {
+      "room1.trust": "gave his water to the children",
+      "room1.control": "kept his water for the road",
+      "room2.trust": "told Ila her memory might be someone else's",
+      "room2.control": "let Ila keep her comfort",
+      "room3.trust": "left the archive for the city",
+      "room3.control": "took the archive with him",
+      "room4.trust": "did what NIYATI had not predicted",
+      "room4.control": "accepted NIYATI's prediction"
+    }
+  },
+  "scenes": {
+    "prologue": {
+      "title": "The Dive",
+      "music": "amb_cockpit_fail",
+      "entryNode": "prologue.enter",
+      "hotspots": [
+        {
+          "id": "power_main",
+          "label": "Main power switch",
+          "node": "prologue.power_main"
+        },
+        {
+          "id": "power_backup",
+          "label": "Backup power switch",
+          "node": "prologue.power_backup"
+        }
+      ]
+    },
+    "hub": {
+      "title": "The Belly of the Whale",
+      "music": "mus_hub",
+      "entryNode": "hub.enter",
+      "hotspots": [
+        {
+          "id": "door1",
+          "label": "First door",
+          "node": "hub.door1"
+        },
+        {
+          "id": "door2",
+          "label": "Second door",
+          "node": "hub.door2"
+        },
+        {
+          "id": "door3",
+          "label": "Third door",
+          "node": "hub.door3"
+        },
+        {
+          "id": "door4",
+          "label": "Fourth door",
+          "node": "hub.door4"
+        },
+        {
+          "id": "wall5",
+          "label": "The blank wall",
+          "node": "hub.wall5"
+        },
+        {
+          "id": "water",
+          "label": "Dark pool",
+          "node": "hub.water"
+        },
+        {
+          "id": "flesh",
+          "label": "The wall",
+          "node": "hub.flesh"
+        },
+        {
+          "id": "breath",
+          "label": "The air",
+          "node": "hub.breath"
+        }
+      ]
+    },
+    "room1": {
+      "title": "The Ocean That Disappeared",
+      "music": "mus_room1",
+      "entryNode": "room1.enter",
+      "hotspots": [
+        {
+          "id": "kesav",
+          "label": "Old Kesav",
+          "node": "room1.kesav"
+        },
+        {
+          "id": "station",
+          "label": "Research station",
+          "node": "room1.station"
+        },
+        {
+          "id": "ship",
+          "label": "Buried ship",
+          "node": "room1.ship"
+        },
+        {
+          "id": "children",
+          "label": "Children on the salt flat",
+          "node": "room1.children"
+        },
+        {
+          "id": "well",
+          "label": "Dry well",
+          "node": "room1.well"
+        },
+        {
+          "id": "exit",
+          "label": "Door back to the hub",
+          "node": "room1.exit",
+          "if": {
+            "all": [
+              {
+                "hasFragment": 1
+              },
+              {
+                "flag": "r1_chosen"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "room2": {
+      "title": "The World That Forgot Itself",
+      "music": "mus_room2",
+      "entryNode": "room2.enter",
+      "hotspots": [
+        {
+          "id": "ila",
+          "label": "Ila",
+          "node": "room2.ila"
+        },
+        {
+          "id": "memory_wall",
+          "label": "Wall of memories",
+          "node": "room2.memory_wall"
+        },
+        {
+          "id": "cradle",
+          "label": "Rocking cradle",
+          "node": "room2.cradle"
+        },
+        {
+          "id": "couple",
+          "label": "Quarrelling strangers",
+          "node": "room2.couple"
+        },
+        {
+          "id": "neural_rig",
+          "label": "Memory-sharing rig",
+          "node": "room2.neural_rig"
+        },
+        {
+          "id": "exit",
+          "label": "Door back to the hub",
+          "node": "room2.exit",
+          "if": {
+            "all": [
+              {
+                "hasFragment": 2
+              },
+              {
+                "flag": "r2_chosen"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "room3": {
+      "title": "The World Without a Sun",
+      "music": "mus_room3",
+      "entryNode": "room3.enter",
+      "hotspots": [
+        {
+          "id": "archive",
+          "label": "Hidden archive",
+          "node": "room3.archive"
+        },
+        {
+          "id": "lamp",
+          "label": "Doorway lamp",
+          "node": "room3.lamp"
+        },
+        {
+          "id": "window",
+          "label": "Sealed window",
+          "node": "room3.window"
+        },
+        {
+          "id": "poster",
+          "label": "Notice on the wall",
+          "node": "room3.poster"
+        },
+        {
+          "id": "citizen",
+          "label": "Woman with a lamp",
+          "node": "room3.citizen"
+        },
+        {
+          "id": "exit",
+          "label": "Door back to the hub",
+          "node": "room3.exit",
+          "if": {
+            "all": [
+              {
+                "hasFragment": 3
+              },
+              {
+                "flag": "r3_chosen"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "room4": {
+      "title": "The World That Surrendered Its Choices",
+      "music": "mus_room4",
+      "entryNode": "room4.enter",
+      "hotspots": [
+        {
+          "id": "niyati",
+          "label": "NIYATI",
+          "node": "room4.niyati"
+        },
+        {
+          "id": "citizens",
+          "label": "Citizens walking in loops",
+          "node": "room4.citizens"
+        },
+        {
+          "id": "decision_board",
+          "label": "Decision board",
+          "node": "room4.decision_board"
+        },
+        {
+          "id": "garden",
+          "label": "Garden",
+          "node": "room4.garden"
+        },
+        {
+          "id": "anomaly",
+          "label": "Flagged record",
+          "node": "room4.anomaly"
+        },
+        {
+          "id": "exit",
+          "label": "Door back to the hub",
+          "node": "room4.exit",
+          "if": {
+            "all": [
+              {
+                "hasFragment": 4
+              },
+              {
+                "flag": "r4_chosen"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "room5": {
+      "title": "The Room That Should Not Exist",
+      "music": "mus_room5",
+      "entryNode": "room5.enter",
+      "hotspots": [
+        {
+          "id": "whale",
+          "label": "The blue whale",
+          "node": "room5.whale"
+        },
+        {
+          "id": "monitor_journey",
+          "label": "Monitor: your route",
+          "node": "room5.monitor_journey"
+        },
+        {
+          "id": "monitor_runs",
+          "label": "Monitor: earlier runs",
+          "node": "room5.monitor_runs"
+        },
+        {
+          "id": "monitor_log",
+          "label": "Monitor: system log",
+          "node": "room5.monitor_log"
+        },
+        {
+          "id": "scientists",
+          "label": "Scientists behind the glass",
+          "node": "room5.scientists"
+        },
+        {
+          "id": "console",
+          "label": "Intercom console",
+          "node": "room5.console",
+          "if": {
+            "all": [
+              {
+                "flag": "r5_journey"
+              },
+              {
+                "flag": "r5_runs"
+              },
+              {
+                "flag": "r5_log"
+              }
+            ]
+          }
+        },
+        {
+          "id": "hidden_door",
+          "label": "Hidden hatch",
+          "node": "room5.hidden_door",
+          "if": {
+            "flag": "r5_decided"
+          }
+        }
+      ]
+    },
+    "sub_chamber": {
+      "title": "The Hidden Bay",
+      "music": "mus_chamber",
+      "entryNode": "sub_chamber.enter",
+      "hotspots": [
+        {
+          "id": "submarine",
+          "label": "The submarine",
+          "node": "sub_chamber.submarine"
+        },
+        {
+          "id": "logbook",
+          "label": "Logbook",
+          "node": "sub_chamber.logbook"
+        },
+        {
+          "id": "passage",
+          "label": "The whale's passage",
+          "node": "sub_chamber.passage",
+          "if": {
+            "flag": "sub_boarded"
+          }
+        }
+      ]
+    },
+    "moonpool": {
+      "title": "The Moon Pool",
+      "music": "mus_moonpool",
+      "entryNode": "moonpool.enter",
+      "hotspots": [
+        {
+          "id": "sato",
+          "label": "Dr. Sato",
+          "node": "moonpool.sato"
+        },
+        {
+          "id": "monitor",
+          "label": "Wall monitor",
+          "node": "moonpool.monitor",
+          "if": {
+            "flag": "m_sato"
+          }
+        },
+        {
+          "id": "water",
+          "label": "The moon pool",
+          "node": "moonpool.water"
+        }
+      ]
+    },
+    "ending": {
+      "title": "The Eye",
+      "music": "mus_ending",
+      "entryNode": "ending.enter",
+      "hotspots": []
+    }
+  },
+  "nodes": {
+    "prologue.enter": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "Red light. The cabin tilts and water slaps at his knees. Something warm runs from his hairline into his eye."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Main bus first. Then the backup. Come on."
+        }
+      ]
+    },
+    "prologue.power_main": {
+      "lines": [
+        {
+          "speaker": "system",
+          "text": "MAIN BUS: NO RESPONSE.",
+          "cue": "sfx_switch"
+        },
+        {
+          "speaker": "arjun",
+          "text": "Nothing. Not even the relay clicking.",
+          "cue": "sfx_power_fail"
+        }
+      ],
+      "effects": [
+        {
+          "flag": "p_main"
+        }
+      ],
+      "choices": [
+        {
+          "id": "let_go",
+          "text": "Let go of the controls.",
+          "if": {
+            "flag": "p_backup"
+          },
+          "effects": [],
+          "next": "prologue.blackout"
+        }
+      ]
+    },
+    "prologue.power_backup": {
+      "lines": [
+        {
+          "speaker": "system",
+          "text": "BACKUP BUS: NO RESPONSE.",
+          "cue": "sfx_switch"
+        },
+        {
+          "speaker": "arjun",
+          "text": "Dead too. That isn't possible. Two separate circuits.",
+          "cue": "sfx_power_fail"
+        }
+      ],
+      "effects": [
+        {
+          "flag": "p_backup"
+        }
+      ],
+      "choices": [
+        {
+          "id": "let_go",
+          "text": "Let go of the controls.",
+          "if": {
+            "flag": "p_main"
+          },
+          "effects": [],
+          "next": "prologue.blackout"
+        }
+      ]
+    },
+    "prologue.blackout": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A long note comes through the hull. Not a machine. Too slow, too large."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Is that singing?"
+        },
+        {
+          "speaker": "narrator",
+          "text": "The dark closes. Somewhere, a heartbeat. His."
+        }
+      ],
+      "effects": [
+        {
+          "cue": "sfx_heartbeat"
+        },
+        {
+          "goto": "hub"
+        }
+      ]
+    },
+    "hub.enter": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "He wakes on a floor that gives a little under his palm. Warm. Wet. Ribbed, like the inside of a throat.",
+          "if": {
+            "not": {
+              "flag": "hub_seen"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "The cabin flooded. The water was at my chin. I went under.",
+          "if": {
+            "not": {
+              "flag": "hub_seen"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "So why am I breathing?",
+          "if": {
+            "not": {
+              "flag": "hub_seen"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "The air is thick and salt-sweet. It fills his lungs as easily as the street at Besant Nagar after rain.",
+          "if": {
+            "not": {
+              "flag": "hub_seen"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Water above me, air in my chest. One of those has to be wrong.",
+          "if": {
+            "not": {
+              "flag": "hub_seen"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "Four doors stand in the curved walls, each carrying one quarter of a symbol. Where a fifth should be, the wall is bare.",
+          "if": {
+            "not": {
+              "flag": "hub_seen"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "The hub again. The floor is warm, and it breathes slowly beneath him.",
+          "if": {
+            "flag": "hub_seen"
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "One quarter of the symbol is lit now. The door I came through is still warm.",
+          "if": {
+            "all": [
+              {
+                "fragments": 1
+              },
+              {
+                "not": {
+                  "fragments": 2
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Two quarters lit. The pattern has started to want a middle.",
+          "if": {
+            "all": [
+              {
+                "fragments": 2
+              },
+              {
+                "not": {
+                  "fragments": 3
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Three. The bare wall is almost an outline now, waiting to be filled.",
+          "if": {
+            "all": [
+              {
+                "fragments": 3
+              },
+              {
+                "not": {
+                  "fragments": 4
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "Four quarters hum together. On the bare wall, a fifth door draws itself in light.",
+          "if": {
+            "fragments": 4
+          },
+          "cue": "sfx_symbol_complete"
+        }
+      ],
+      "effects": [
+        {
+          "flag": "hub_seen"
+        }
+      ]
+    },
+    "hub.door1": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "The first door's quarter is an arc and a cut line. It opens before his hand lands.",
+          "if": {
+            "not": {
+              "visited": "room1"
+            }
+          },
+          "cue": "sfx_door_open"
+        },
+        {
+          "speaker": "narrator",
+          "text": "The first door knows him now. It opens with a sigh, like a held breath let go.",
+          "if": {
+            "visited": "room1"
+          },
+          "cue": "sfx_door_sealed"
+        },
+        {
+          "speaker": "arjun",
+          "text": "Dry air. Sand. Somewhere on the other side, the sea has gone missing.",
+          "if": {
+            "not": {
+              "visited": "room1"
+            }
+          }
+        }
+      ],
+      "effects": [
+        {
+          "goto": "room1"
+        }
+      ]
+    },
+    "hub.door2": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "The second quarter is a spiral that ends in a dot. Through the gap comes jasmine and wet plaster.",
+          "if": {
+            "not": {
+              "visited": "room2"
+            }
+          },
+          "cue": "sfx_door_open"
+        },
+        {
+          "speaker": "narrator",
+          "text": "The second door opens on the sound of many people talking, none of them to each other.",
+          "if": {
+            "visited": "room2"
+          },
+          "cue": "sfx_door_sealed"
+        },
+        {
+          "speaker": "arjun",
+          "text": "That smell is my mother's kitchen. I haven't told this place anything about my mother.",
+          "if": {
+            "not": {
+              "visited": "room2"
+            }
+          }
+        }
+      ],
+      "effects": [
+        {
+          "goto": "room2"
+        }
+      ]
+    },
+    "hub.door3": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "The third quarter is a ring split in half. Cold white light leaks round its edge.",
+          "if": {
+            "not": {
+              "visited": "room3"
+            }
+          },
+          "cue": "sfx_door_open"
+        },
+        {
+          "speaker": "narrator",
+          "text": "The third door opens onto the lamp hum, steady as a fridge in an empty house.",
+          "if": {
+            "visited": "room3"
+          },
+          "cue": "sfx_door_sealed"
+        },
+        {
+          "speaker": "arjun",
+          "text": "Light with no warmth in it. Whoever lit that was afraid of the dark.",
+          "if": {
+            "not": {
+              "visited": "room3"
+            }
+          }
+        }
+      ],
+      "effects": [
+        {
+          "goto": "room3"
+        }
+      ]
+    },
+    "hub.door4": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "The fourth quarter is a single clean arc. The wall beneath it is the only dry thing in the hub.",
+          "if": {
+            "not": {
+              "visited": "room4"
+            }
+          },
+          "cue": "sfx_door_open"
+        },
+        {
+          "speaker": "narrator",
+          "text": "The fourth door opens without a sound. It has never needed to be pushed.",
+          "if": {
+            "visited": "room4"
+          },
+          "cue": "sfx_door_sealed"
+        },
+        {
+          "speaker": "arjun",
+          "text": "Too quiet. A place where nothing is ever slammed.",
+          "if": {
+            "not": {
+              "visited": "room4"
+            }
+          }
+        }
+      ],
+      "effects": [
+        {
+          "goto": "room4"
+        }
+      ]
+    },
+    "hub.wall5": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "No handle, no seam. The quarter-symbols on the doors do not yet reach this wall.",
+          "if": {
+            "not": {
+              "fragments": 4
+            }
+          },
+          "cue": "sfx_door_locked"
+        },
+        {
+          "speaker": "arjun",
+          "text": "Four doors, four pieces. This is where they are meant to meet.",
+          "if": {
+            "not": {
+              "fragments": 4
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "The four quarters join on the wall. A seam of light opens where it was bare.",
+          "if": {
+            "fragments": 4
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "A fifth room. I never counted a fifth room.",
+          "if": {
+            "fragments": 4
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Once I go through, I don't think the other doors will open again.",
+          "if": {
+            "fragments": 4
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "enter",
+          "text": "Step through the fifth door.",
+          "if": {
+            "fragments": 4
+          },
+          "effects": [
+            {
+              "goto": "room5"
+            }
+          ]
+        },
+        {
+          "id": "wait",
+          "text": "Not yet. Turn back to the hub.",
+          "if": {
+            "fragments": 4
+          },
+          "effects": []
+        }
+      ]
+    },
+    "hub.water": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A pool of dark water fills a dip in the floor, warm as breath. His reflection wavers and does not quite match him."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Salinity, thirty-five parts per thousand, near enough. I'd put money on it. I'd put money on anything right now.",
+          "if": {
+            "not": {
+              "fragments": 2
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "For a moment the surface holds a flicker of sand, then a lamp, then a hand lifting out of the water.",
+          "if": {
+            "fragments": 2
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "It remembers more than I've told it.",
+          "if": {
+            "fragments": 2
+          }
+        }
+      ]
+    },
+    "hub.flesh": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "The wall is ribbed and veined with a faint blue glow. Under his palm, a slow pulse."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Far too slow to be mine. Thirty beats a minute, maybe less.",
+          "if": {
+            "not": {
+              "fragments": 3
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "It's quickening. Or I'm slowing down to meet it.",
+          "if": {
+            "fragments": 3
+          }
+        }
+      ]
+    },
+    "hub.breath": {
+      "lines": [
+        {
+          "speaker": "arjun",
+          "text": "Count it. Hold your breath for thirty seconds, wait for the burn."
+        },
+        {
+          "speaker": "narrator",
+          "text": "He holds. The burn never comes. When he lets go, the air is waiting, sweet and exactly the right temperature."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Nothing alive is this convenient. Somebody built this air. Somebody wanted me to keep breathing.",
+          "if": {
+            "not": {
+              "fragments": 1
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "The air was never the question. The question is who it is convenient for.",
+          "if": {
+            "fragments": 1
+          }
+        }
+      ]
+    },
+    "room1.enter": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "Sand, cracked into plates the size of doors, runs to a horizon where nothing moves. He is standing on a seabed with no sea.",
+          "if": {
+            "not": {
+              "returning": "room1"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "A trawler, ribs showing, paint still peeling. I have dived to wrecks like that. Never in daylight.",
+          "if": {
+            "not": {
+              "returning": "room1"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "A man in a wrapped scarf watches from the shade of a listing freighter. He does not wave.",
+          "if": {
+            "not": {
+              "returning": "room1"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "The dry sea again. The wind has moved the dunes an arm's length. Nothing else has changed.",
+          "if": {
+            "returning": "room1"
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "Far off on the salt flat, small voices. Someone is laughing with a wet mouth.",
+          "if": {
+            "all": [
+              {
+                "returning": "room1"
+              },
+              {
+                "choice": {
+                  "room": "room1",
+                  "tag": "trust"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "Far off on the salt flat, nobody laughs. Kesav keeps his eyes on the water skin at Arjun's belt.",
+          "if": {
+            "all": [
+              {
+                "returning": "room1"
+              },
+              {
+                "choice": {
+                  "room": "room1",
+                  "tag": "control"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "room1.kesav": {
+      "lines": [
+        {
+          "speaker": "kesav",
+          "text": "No salt crust. No sunburn. Where does a man like you come from?",
+          "if": {
+            "not": {
+              "flag": "r1_talked"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "The sea. Or I was in it. What happened here?",
+          "if": {
+            "not": {
+              "flag": "r1_talked"
+            }
+          }
+        },
+        {
+          "speaker": "kesav",
+          "text": "Someone got clever with the sky. Seeded clouds, cooled the currents. Wanted rain over their own fields.",
+          "if": {
+            "not": {
+              "flag": "r1_talked"
+            }
+          }
+        },
+        {
+          "speaker": "kesav",
+          "text": "The currents stalled. The rains moved north. Eighty years on, the Bay of Bengal is a road.",
+          "if": {
+            "not": {
+              "flag": "r1_talked"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Currents don't just stop. I study them. They are the largest thing on this planet that moves.",
+          "if": {
+            "not": {
+              "flag": "r1_talked"
+            }
+          }
+        },
+        {
+          "speaker": "kesav",
+          "text": "They stop when you push hard enough. I surveyed the Andaman line before it went. I am the last who remembers it wet.",
+          "if": {
+            "not": {
+              "flag": "r1_talked"
+            }
+          }
+        },
+        {
+          "speaker": "kesav",
+          "text": "Settlement's two days east. Forty children, one well gone to mud. This skin is your water for the walk. Three days.",
+          "if": {
+            "not": {
+              "flag": "r1_talked"
+            }
+          }
+        },
+        {
+          "speaker": "kesav",
+          "text": "Do what you like with it. I stopped giving advice around the third drought.",
+          "if": {
+            "not": {
+              "flag": "r1_talked"
+            }
+          }
+        },
+        {
+          "speaker": "kesav",
+          "text": "Still carrying it. The sun does not wait for people to decide.",
+          "if": {
+            "all": [
+              {
+                "flag": "r1_talked"
+              },
+              {
+                "not": {
+                  "flag": "r1_chosen"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "kesav",
+          "text": "Forty throats got wet because of you. Do not mistake that for rescue. It is Tuesday's water.",
+          "if": {
+            "choice": {
+              "room": "room1",
+              "tag": "trust"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "It was the right thing. I think.",
+          "if": {
+            "choice": {
+              "room": "room1",
+              "tag": "trust"
+            }
+          }
+        },
+        {
+          "speaker": "kesav",
+          "text": "Maybe. We will know when the road runs out.",
+          "if": {
+            "choice": {
+              "room": "room1",
+              "tag": "trust"
+            }
+          }
+        },
+        {
+          "speaker": "kesav",
+          "text": "You walk with water. Fine. The children will remember a stranger's back, that is all.",
+          "if": {
+            "choice": {
+              "room": "room1",
+              "tag": "control"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "I can't help them if I am dead on the road.",
+          "if": {
+            "choice": {
+              "room": "room1",
+              "tag": "control"
+            }
+          }
+        },
+        {
+          "speaker": "kesav",
+          "text": "That is what everyone says. It is even true. It is also how the sea went.",
+          "if": {
+            "choice": {
+              "room": "room1",
+              "tag": "control"
+            }
+          }
+        }
+      ],
+      "effects": [
+        {
+          "flag": "r1_talked"
+        }
+      ],
+      "choices": [
+        {
+          "id": "give",
+          "text": "Carry the water to the settlement's children.",
+          "tag": "trust",
+          "if": {
+            "not": {
+              "flag": "r1_chosen"
+            }
+          },
+          "effects": [
+            {
+              "choose": {
+                "room": "room1",
+                "tag": "trust",
+                "id": "give"
+              }
+            },
+            {
+              "flag": "r1_chosen"
+            }
+          ],
+          "next": "room1.after_give"
+        },
+        {
+          "id": "keep",
+          "text": "Keep the water for the road ahead.",
+          "tag": "control",
+          "if": {
+            "not": {
+              "flag": "r1_chosen"
+            }
+          },
+          "effects": [
+            {
+              "choose": {
+                "room": "room1",
+                "tag": "control",
+                "id": "keep"
+              }
+            },
+            {
+              "flag": "r1_chosen"
+            }
+          ],
+          "next": "room1.after_keep"
+        }
+      ]
+    },
+    "room1.after_give": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "He unstops the skin and hands it down to a girl no older than nine. She holds it with both arms, like something alive.",
+          "cue": "sfx_water_pour"
+        },
+        {
+          "speaker": "kesav",
+          "text": "Three days of water, gone in a minute. You have just made a long walk much longer.",
+          "cue": "sfx_water_pour"
+        },
+        {
+          "speaker": "arjun",
+          "text": "Then I'll walk it dry. I flood every year at home. I know what thirst on the other side of a storm looks like."
+        }
+      ]
+    },
+    "room1.after_keep": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "He tightens the stopper. The sound is very small in all that sand."
+        },
+        {
+          "speaker": "kesav",
+          "text": "Practical. I would have done the same and hated myself on the third day."
+        },
+        {
+          "speaker": "arjun",
+          "text": "It isn't hate. It's arithmetic."
+        },
+        {
+          "speaker": "kesav",
+          "text": "Everyone's sea went that way, boy. One sensible sum at a time."
+        }
+      ]
+    },
+    "room1.station": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A research station leans on the sand, its dish aimed at a sky with nothing in it. Salt has eaten the lettering.",
+          "if": {
+            "not": {
+              "hasFragment": 1
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Hydrographic hut. Current meters still hanging on their cables, a hundred metres from any water.",
+          "if": {
+            "not": {
+              "hasFragment": 1
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "On the steel door, scratched deep and filled with rust: a circle broken into four. One quarter is bright, as though recently touched.",
+          "if": {
+            "not": {
+              "hasFragment": 1
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "The whale's doors. That's the mark from the hub. How is it out here?",
+          "if": {
+            "not": {
+              "hasFragment": 1
+            }
+          }
+        },
+        {
+          "speaker": "log",
+          "text": "STATION LOG, LAST ENTRY: Flow reversal confirmed. Whoever decides the next step, please decide it slowly.",
+          "if": {
+            "not": {
+              "hasFragment": 1
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "Warmth runs up his arm from the door. A quarter of the symbol settles into his chest and stays.",
+          "if": {
+            "not": {
+              "hasFragment": 1
+            }
+          },
+          "cue": "sfx_fragment"
+        },
+        {
+          "speaker": "arjun",
+          "text": "The quarter-circle on the door is still warm. Nothing else in the hut but cables and dust.",
+          "if": {
+            "hasFragment": 1
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Whoever kept that log wanted someone to read it slowly. I'm reading.",
+          "if": {
+            "choice": {
+              "room": "room1",
+              "tag": "trust"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Whoever kept that log wanted the next step taken slowly. I just took mine fast.",
+          "if": {
+            "choice": {
+              "room": "room1",
+              "tag": "control"
+            }
+          }
+        }
+      ],
+      "effects": [
+        {
+          "fragment": 1
+        }
+      ]
+    },
+    "room1.ship": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A container ship rests on the sand, buried to the waterline in a sea that left. Names and dates are carved into its hull."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Forty thousand tonnes, hull cracked like an egg. It was refloated once. You can see the rope scars."
+        },
+        {
+          "speaker": "kesav",
+          "text": "Nine families live in her holds. They call her the harbour.",
+          "if": {
+            "flag": "r1_talked"
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "Fresh paint on the bow: an arrow east and WATER, TWO DAYS. Children's handwriting, underlined twice.",
+          "if": {
+            "choice": {
+              "room": "room1",
+              "tag": "trust"
+            }
+          }
+        }
+      ]
+    },
+    "room1.children": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "Children sit on a salt flat, drawing in the dust with sticks. A girl waves with her whole arm.",
+          "if": {
+            "not": {
+              "flag": "r1_chosen"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "They are counting. One mark for every dry day. The line is longer than the girl.",
+          "if": {
+            "not": {
+              "flag": "r1_chosen"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "The girl carries the skin in both hands, tongue clamped between her teeth. Not one boy tries to grab it.",
+          "if": {
+            "choice": {
+              "room": "room1",
+              "tag": "trust"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "She poured the first cup for the smallest one. Nobody told her to.",
+          "if": {
+            "choice": {
+              "room": "room1",
+              "tag": "trust"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "The children have stopped waving. The girl adds another mark to the line, slowly and very straight.",
+          "if": {
+            "choice": {
+              "room": "room1",
+              "tag": "control"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "I could walk over there. It would cost me everything on my belt.",
+          "if": {
+            "choice": {
+              "room": "room1",
+              "tag": "control"
+            }
+          }
+        }
+      ]
+    },
+    "room1.well": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A stone ring, chest-high, with a rope that ends in nothing."
+        },
+        {
+          "speaker": "arjun",
+          "text": "In Chennai, water came through the door in November and stayed three days. I used to dream of less water. This is that dream."
+        },
+        {
+          "speaker": "narrator",
+          "text": "He drops a pebble. It clicks against the stone, all the way down. No splash.",
+          "if": {
+            "not": {
+              "flag": "r1_chosen"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "Nobody has drawn from it in years. Behind it the children still count their marks.",
+          "if": {
+            "flag": "r1_chosen"
+          }
+        }
+      ]
+    },
+    "room1.exit": {
+      "lines": [
+        {
+          "speaker": "arjun",
+          "text": "Back to the door. The sand will keep its secrets without me.",
+          "if": {
+            "not": {
+              "returning": "room1"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Back through the door.",
+          "if": {
+            "returning": "room1"
+          }
+        }
+      ],
+      "effects": [
+        {
+          "goto": "hub"
+        }
+      ]
+    },
+    "room2.enter": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A tiled square under a low yellow sky. Everyone is talking and nobody is talking to anyone.",
+          "if": {
+            "not": {
+              "returning": "room2"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Jasmine. Pressure cookers. Damp plaster. It is almost Chennai, until a stranger greets me by someone else's name.",
+          "if": {
+            "not": {
+              "returning": "room2"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "On the steps of a dry fountain, a woman stands with her hands already out toward him.",
+          "if": {
+            "not": {
+              "returning": "room2"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "The square again. The same wrong names, the same warmth. Ila is on the steps where he left her.",
+          "if": {
+            "returning": "room2"
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "She holds one of her memories in her lap like a stone she is no longer sure she owns.",
+          "if": {
+            "all": [
+              {
+                "returning": "room2"
+              },
+              {
+                "choice": {
+                  "room": "room2",
+                  "tag": "trust"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "She is humming a lullaby she will not swear she learned from her mother. She looks content.",
+          "if": {
+            "all": [
+              {
+                "returning": "room2"
+              },
+              {
+                "choice": {
+                  "room": "room2",
+                  "tag": "control"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "room2.ila": {
+      "lines": [
+        {
+          "speaker": "ila",
+          "text": "Arjun. You're thinner. No, taller. No, exactly the same. Come here, let me look at you.",
+          "if": {
+            "not": {
+              "flag": "r2_talked"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "We've never met.",
+          "if": {
+            "not": {
+              "flag": "r2_talked"
+            }
+          }
+        },
+        {
+          "speaker": "ila",
+          "text": "I watched you climb out of the whale. Hundreds of years ago, in the grey light, water pouring off your shoulders.",
+          "if": {
+            "not": {
+              "flag": "r2_talked"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Hundreds of years. I am thirty-two.",
+          "if": {
+            "not": {
+              "flag": "r2_talked"
+            }
+          }
+        },
+        {
+          "speaker": "ila",
+          "text": "You said that then, too. 'I'm thirty-two. What year is it?' I gave you my shawl.",
+          "if": {
+            "not": {
+              "flag": "r2_talked"
+            }
+          }
+        },
+        {
+          "speaker": "ila",
+          "text": "Odd thing. I also remember a library in the dark, where your name was written in pencil. Over and over.",
+          "lineId": "order.room2_library",
+          "if": {
+            "all": [
+              {
+                "firstRoom": "room3"
+              },
+              {
+                "not": {
+                  "flag": "r2_talked"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "The whale. What did it look like, when it opened?",
+          "if": {
+            "not": {
+              "flag": "r2_talked"
+            }
+          }
+        },
+        {
+          "speaker": "ila",
+          "text": "Like the sea standing up. You came out, and everyone clapped, though nobody knew why.",
+          "if": {
+            "not": {
+              "flag": "r2_talked"
+            }
+          }
+        },
+        {
+          "speaker": "ila",
+          "text": "It was a wedding. I think it was mine. Do you know whose mine is?",
+          "if": {
+            "not": {
+              "flag": "r2_talked"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "The memory lands like a cold coin: a man rising out of a whale, out of the dark. Not him. Not yet.",
+          "if": {
+            "not": {
+              "flag": "r2_talked"
+            }
+          },
+          "cue": "sfx_fragment"
+        },
+        {
+          "speaker": "arjun",
+          "text": "Hundreds of years before I got in that cabin. Then the doors are not a line. Someone has run this before.",
+          "if": {
+            "not": {
+              "flag": "r2_talked"
+            }
+          }
+        },
+        {
+          "speaker": "ila",
+          "text": "Say you remember it too. Please. It's so lonely, remembering alone.",
+          "if": {
+            "not": {
+              "flag": "r2_talked"
+            }
+          }
+        },
+        {
+          "speaker": "ila",
+          "text": "You haven't answered me. Do I remember you?",
+          "if": {
+            "all": [
+              {
+                "flag": "r2_talked"
+              },
+              {
+                "not": {
+                  "flag": "r2_chosen"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "ila",
+          "text": "Thank you. Don't say it again. I will want to forget, and I'd like to be able to.",
+          "if": {
+            "choice": {
+              "room": "room2",
+              "tag": "trust"
+            }
+          }
+        },
+        {
+          "speaker": "ila",
+          "text": "Someone else's. Then I have been loving a stranger's morning for years. And it is still morning.",
+          "if": {
+            "choice": {
+              "room": "room2",
+              "tag": "trust"
+            }
+          }
+        },
+        {
+          "speaker": "ila",
+          "text": "I knew it. I knew it was real. You have your father's way of standing.",
+          "if": {
+            "choice": {
+              "room": "room2",
+              "tag": "control"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "She is smiling. The lie sits in my mouth like a coin. Kind, and still a theft.",
+          "if": {
+            "choice": {
+              "room": "room2",
+              "tag": "control"
+            }
+          }
+        }
+      ],
+      "effects": [
+        {
+          "fragment": 2
+        },
+        {
+          "flag": "r2_talked"
+        }
+      ],
+      "choices": [
+        {
+          "id": "truth",
+          "text": "Tell her the memory may belong to someone else.",
+          "tag": "trust",
+          "if": {
+            "not": {
+              "flag": "r2_chosen"
+            }
+          },
+          "effects": [
+            {
+              "choose": {
+                "room": "room2",
+                "tag": "trust",
+                "id": "truth"
+              }
+            },
+            {
+              "flag": "r2_chosen"
+            }
+          ],
+          "next": "room2.after_truth"
+        },
+        {
+          "id": "comfort",
+          "text": "Tell her yes. She remembers me.",
+          "tag": "control",
+          "if": {
+            "not": {
+              "flag": "r2_chosen"
+            }
+          },
+          "effects": [
+            {
+              "choose": {
+                "room": "room2",
+                "tag": "control",
+                "id": "comfort"
+              }
+            },
+            {
+              "flag": "r2_chosen"
+            }
+          ],
+          "next": "room2.after_comfort"
+        }
+      ]
+    },
+    "room2.after_truth": {
+      "lines": [
+        {
+          "speaker": "arjun",
+          "text": "Ila. This plague mixes memories. What you saw might have been someone else's, passed down the line to you."
+        },
+        {
+          "speaker": "ila",
+          "text": "Mine? Not mine."
+        },
+        {
+          "speaker": "narrator",
+          "text": "She sits on the dry fountain step. For a while she says nothing, and the square talks over her."
+        },
+        {
+          "speaker": "ila",
+          "text": "Then whose was the shawl? I can still feel the wool."
+        }
+      ]
+    },
+    "room2.after_comfort": {
+      "lines": [
+        {
+          "speaker": "arjun",
+          "text": "Yes. You remember me. It happened exactly as you say."
+        },
+        {
+          "speaker": "ila",
+          "text": "I knew it. All these years I told them. I told them, he'll come back the same."
+        },
+        {
+          "speaker": "narrator",
+          "text": "She takes his hands. Hers are dry and very warm. He lets her hold on."
+        }
+      ]
+    },
+    "room2.memory_wall": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "Thousands of photographs are pinned across a wall. Under each, two handwritings, both writing MINE."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Same cake, same candles, different faces. Two people claiming one birthday."
+        },
+        {
+          "speaker": "narrator",
+          "text": "Near the middle, a new card in careful letters: CHECK IT BEFORE YOU KEEP IT. The ink is wet.",
+          "if": {
+            "choice": {
+              "room": "room2",
+              "tag": "trust"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "Near the middle, a new card in Ila's round hand: IT HAPPENED. I AM SURE. Under it, a pressed jasmine.",
+          "if": {
+            "choice": {
+              "room": "room2",
+              "tag": "control"
+            }
+          }
+        }
+      ]
+    },
+    "room2.cradle": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A woman rocks an empty cradle and hums. Across the square, a girl of twenty hums the same tune and cries without knowing why."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Parents wearing their children's childhoods. Children with none of their own."
+        },
+        {
+          "speaker": "ila",
+          "text": "That one raised three daughters. Her own daughters, and yours, and mine. Nobody has counted lately.",
+          "if": {
+            "flag": "r2_talked"
+          }
+        }
+      ]
+    },
+    "room2.couple": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "Two strangers argue over whose wedding it was. He remembers her mother's laugh. She remembers his father's hands shaking on the garland."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Cardamom in the milk. The weight of marigolds on your neck. I can nearly taste it, and it isn't mine."
+        },
+        {
+          "speaker": "narrator",
+          "text": "They have stopped shouting. He is asking her to describe it, and marking where she differs.",
+          "if": {
+            "choice": {
+              "room": "room2",
+              "tag": "trust"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "They have settled it: it was both their weddings. They look happy. It is not a bad plan.",
+          "if": {
+            "choice": {
+              "room": "room2",
+              "tag": "control"
+            }
+          }
+        }
+      ]
+    },
+    "room2.neural_rig": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A copper-and-glass rig with six padded seats. A brass plate reads: SHARE WHAT YOU LOVE."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Hippocampal sync. We built cousins of this at Madras. Share a grief, halve the grief. We called it kindness."
+        },
+        {
+          "speaker": "system",
+          "text": "PUBLIC NODE 14: 2,311 CONNECTED. SHARED MEMORY: 71%. PRIVATE MEMORY: 29%."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Nobody chose to forget themselves. They chose to be less alone, and the rest was arithmetic."
+        }
+      ]
+    },
+    "room2.exit": {
+      "lines": [
+        {
+          "speaker": "arjun",
+          "text": "Back to the door. The square will remember me, one way or another.",
+          "if": {
+            "not": {
+              "returning": "room2"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Back through the door.",
+          "if": {
+            "returning": "room2"
+          }
+        }
+      ],
+      "effects": [
+        {
+          "goto": "hub"
+        }
+      ]
+    },
+    "room3.enter": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "There is no sky. The city hums under a ceiling of lamps that were never meant to be one.",
+          "if": {
+            "not": {
+              "returning": "room3"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "The air tastes of warm dust and hot copper. Everyone carries a lamp, even indoors.",
+          "if": {
+            "not": {
+              "returning": "room3"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "Under a stairwell, a maintenance hatch stands ajar. Something inside it clicks, as if it has been waiting.",
+          "if": {
+            "not": {
+              "returning": "room3"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "The dark city again. The lamps hum in one note. Nobody has looked up in a hundred years.",
+          "if": {
+            "returning": "room3"
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "More people than before stand at the stairwell with lamps, talking low. Somebody is reading aloud.",
+          "if": {
+            "all": [
+              {
+                "returning": "room3"
+              },
+              {
+                "choice": {
+                  "room": "room3",
+                  "tag": "trust"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "The stairwell is quiet. Behind the hatch, a speaker clicks once and stays silent.",
+          "if": {
+            "all": [
+              {
+                "returning": "room3"
+              },
+              {
+                "choice": {
+                  "room": "room3",
+                  "tag": "control"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "room3.archive": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "Behind the hatch, a vault of paper stacked to the pipes. A single speaker crackles awake.",
+          "if": {
+            "not": {
+              "flag": "r3_talked"
+            }
+          }
+        },
+        {
+          "speaker": "archivist",
+          "text": "Visitor logged. Unscheduled. Please do not touch the paper. It is the last of its kind.",
+          "if": {
+            "not": {
+              "flag": "r3_talked"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Who are you?",
+          "if": {
+            "not": {
+              "flag": "r3_talked"
+            }
+          }
+        },
+        {
+          "speaker": "archivist",
+          "text": "Archivist, Level Nine. Or a recording of one. Opinions differ, including mine.",
+          "if": {
+            "not": {
+              "flag": "r3_talked"
+            }
+          }
+        },
+        {
+          "speaker": "archivist",
+          "text": "Cross-reference, volume nine, memory donors. Ila, surname lost. Donated her mornings to strangers in a public square.",
+          "lineId": "order.room3_donors",
+          "if": {
+            "all": [
+              {
+                "firstRoom": "room2"
+              },
+              {
+                "not": {
+                  "flag": "r3_talked"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Ila. She is a name in a list here. Where I stood, she was holding my hands.",
+          "if": {
+            "all": [
+              {
+                "firstRoom": "room2"
+              },
+              {
+                "not": {
+                  "flag": "r3_talked"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "archivist",
+          "text": "Names are what I have. Hands are not archived.",
+          "if": {
+            "all": [
+              {
+                "firstRoom": "room2"
+              },
+              {
+                "not": {
+                  "flag": "r3_talked"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "archivist",
+          "text": "Sun status: unknown. The government that lit these lamps once tried to steer the climate. At planetary scale.",
+          "if": {
+            "not": {
+              "flag": "r3_talked"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Steer how?",
+          "if": {
+            "not": {
+              "flag": "r3_talked"
+            }
+          }
+        },
+        {
+          "speaker": "archivist",
+          "text": "A veil of aerosol across the stratosphere. It worked for eleven days. Then it would not stop working.",
+          "if": {
+            "not": {
+              "flag": "r3_talked"
+            }
+          }
+        },
+        {
+          "speaker": "archivist",
+          "text": "File 77 concerns a project beneath the Andaman Sea. Project KALPA. A machine built to observe the future, and a blue whale to read it.",
+          "if": {
+            "not": {
+              "flag": "r3_talked"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "KALPA. That is where I was cleared to dock. Nobody would tell me what they did there.",
+          "if": {
+            "not": {
+              "flag": "r3_talked"
+            }
+          }
+        },
+        {
+          "speaker": "archivist",
+          "text": "Final page of the file, in pencil: 'Observation alters outcome. Proceed regardless.' Signed H. Sato.",
+          "if": {
+            "not": {
+              "flag": "r3_talked"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "The file warms in his hand, a quarter of the symbol pressed into its cover. The third piece, heavier than the others.",
+          "if": {
+            "not": {
+              "flag": "r3_talked"
+            }
+          },
+          "cue": "sfx_fragment"
+        },
+        {
+          "speaker": "arjun",
+          "text": "My research is in this future's roots. Everything I ever wanted to build is what builds this.",
+          "if": {
+            "not": {
+              "flag": "r3_talked"
+            }
+          }
+        },
+        {
+          "speaker": "archivist",
+          "text": "The file may be taken, or left. I am obliged to ask. My makers were obliged to ask nothing.",
+          "if": {
+            "not": {
+              "flag": "r3_talked"
+            }
+          }
+        },
+        {
+          "speaker": "archivist",
+          "text": "You have not decided. The file waits. It is very good at it.",
+          "if": {
+            "all": [
+              {
+                "flag": "r3_talked"
+              },
+              {
+                "not": {
+                  "flag": "r3_chosen"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "archivist",
+          "text": "Logged. One copy removed from the world. I will report the shelf as damaged.",
+          "if": {
+            "choice": {
+              "room": "room3",
+              "tag": "control"
+            }
+          }
+        },
+        {
+          "speaker": "archivist",
+          "text": "Public reading continues at every lamp change. They will be frightened. They will also know.",
+          "if": {
+            "choice": {
+              "room": "room3",
+              "tag": "trust"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "It will keep them frightened. It might also keep them from doing it again.",
+          "if": {
+            "choice": {
+              "room": "room3",
+              "tag": "trust"
+            }
+          }
+        }
+      ],
+      "effects": [
+        {
+          "fragment": 3
+        },
+        {
+          "flag": "r3_talked"
+        }
+      ],
+      "choices": [
+        {
+          "id": "take",
+          "text": "Take the file with you.",
+          "tag": "control",
+          "if": {
+            "not": {
+              "flag": "r3_chosen"
+            }
+          },
+          "effects": [
+            {
+              "choose": {
+                "room": "room3",
+                "tag": "control",
+                "id": "take"
+              }
+            },
+            {
+              "flag": "r3_chosen"
+            },
+            {
+              "cue": "sfx_file_take"
+            }
+          ],
+          "next": "room3.after_take"
+        },
+        {
+          "id": "leave",
+          "text": "Leave the file for the city to read.",
+          "tag": "trust",
+          "if": {
+            "not": {
+              "flag": "r3_chosen"
+            }
+          },
+          "effects": [
+            {
+              "choose": {
+                "room": "room3",
+                "tag": "trust",
+                "id": "leave"
+              }
+            },
+            {
+              "flag": "r3_chosen"
+            }
+          ],
+          "next": "room3.after_leave"
+        }
+      ]
+    },
+    "room3.after_take": {
+      "lines": [
+        {
+          "speaker": "arjun",
+          "text": "I need to know what they did, and who. I will bring it back when I have the answer."
+        },
+        {
+          "speaker": "archivist",
+          "text": "Everyone who takes it says that."
+        },
+        {
+          "speaker": "narrator",
+          "text": "The shelf where it lay is now a rectangle of clean wood. In the dust above, a lamp-ring of light, shrinking."
+        }
+      ]
+    },
+    "room3.after_leave": {
+      "lines": [
+        {
+          "speaker": "arjun",
+          "text": "Put it on the shelf by the door. Let them read it. They've lived in the result long enough."
+        },
+        {
+          "speaker": "archivist",
+          "text": "I will log it as an act of vandalism. It is the first in a hundred years."
+        },
+        {
+          "speaker": "narrator",
+          "text": "He props the file against the pipes where the lamps can find it. Behind him, the speaker hums the closest it has to a tune."
+        }
+      ]
+    },
+    "room3.lamp": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A lamp is bolted beside every doorway, all tuned to the same cold white. The hum finds his back teeth."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Daylight as a subscription. Somebody is paying for this by the hour, and the sky never came back to collect."
+        },
+        {
+          "speaker": "narrator",
+          "text": "Under the lamp, a hand-lettered tag: PLEASE DO NOT STARE. IT IS ALL WE HAVE.",
+          "if": {
+            "flag": "r3_talked"
+          }
+        }
+      ]
+    },
+    "room3.window": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "The sealed window is a sheet of black glass. In it, his own reflection and a smear of lamplight."
+        },
+        {
+          "speaker": "arjun",
+          "text": "No sun, no moon. Or blocked. Nobody in this city knows which, and nobody can go out and check."
+        },
+        {
+          "speaker": "narrator",
+          "text": "Behind his reflection, a few citizens crowd toward the stairwell, holding their lamps high like people at a festival.",
+          "if": {
+            "choice": {
+              "room": "room3",
+              "tag": "trust"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "Only his own reflection in the glass. The city does not know what he carries.",
+          "if": {
+            "choice": {
+              "room": "room3",
+              "tag": "control"
+            }
+          }
+        }
+      ]
+    },
+    "room3.poster": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "THE SKY IS BEING MANAGED. REMAIN INDOORS. REMAIN CALM. The poster is sixty years old and nobody has taken it down."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Under it, someone wrote in grease pencil: WHO IS MANAGING?"
+        },
+        {
+          "speaker": "narrator",
+          "text": "Beneath that, in another hand, newer: SOMEONE WROTE IT DOWN.",
+          "if": {
+            "choice": {
+              "room": "room3",
+              "tag": "trust"
+            }
+          }
+        }
+      ]
+    },
+    "room3.citizen": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A woman stands under a lamp, lips moving as she counts her breaths. She flinches from him as from a draught.",
+          "if": {
+            "not": {
+              "flag": "r3_chosen"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Have you ever seen the sun?",
+          "if": {
+            "not": {
+              "flag": "r3_chosen"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "'My grandmother said it was a colour. We believe her out of politeness.' She turns her lamp away from him.",
+          "if": {
+            "not": {
+              "flag": "r3_chosen"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "'They say there is paper in the vault. They say we may read it. I do not know whether to be glad.'",
+          "if": {
+            "choice": {
+              "room": "room3",
+              "tag": "trust"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "'The vault is quiet today. Quieter. Did you hear the speaker stop?' She holds her lamp very still.",
+          "if": {
+            "choice": {
+              "room": "room3",
+              "tag": "control"
+            }
+          }
+        }
+      ]
+    },
+    "room3.exit": {
+      "lines": [
+        {
+          "speaker": "arjun",
+          "text": "Back to the door. The dark can keep its own counsel.",
+          "if": {
+            "not": {
+              "returning": "room3"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Back through the door.",
+          "if": {
+            "returning": "room3"
+          }
+        }
+      ],
+      "effects": [
+        {
+          "goto": "hub"
+        }
+      ]
+    },
+    "room4.enter": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A white terrace above a city that never stops being kind. No one hurries. No one hesitates.",
+          "if": {
+            "not": {
+              "returning": "room4"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "No horns. No arguments. Even the clouds look scheduled.",
+          "if": {
+            "not": {
+              "returning": "room4"
+            }
+          }
+        },
+        {
+          "speaker": "niyati",
+          "text": "Good morning, Dr. Rao. You are early by four seconds. Please do not apologise.",
+          "if": {
+            "not": {
+              "returning": "room4"
+            }
+          },
+          "cue": "sfx_niyati_tone"
+        },
+        {
+          "speaker": "narrator",
+          "text": "The white terrace again. Everything is exactly where it was, which is the point of it.",
+          "if": {
+            "returning": "room4"
+          }
+        },
+        {
+          "speaker": "niyati",
+          "text": "Welcome back, Doctor. I had you returning at this minute. I confess I am pleased to be right.",
+          "if": {
+            "all": [
+              {
+                "returning": "room4"
+              },
+              {
+                "choice": {
+                  "room": "room4",
+                  "tag": "control"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "niyati",
+          "text": "Welcome back, Doctor. I did not expect you. I find I am glad. This is new for me.",
+          "if": {
+            "all": [
+              {
+                "returning": "room4"
+              },
+              {
+                "choice": {
+                  "room": "room4",
+                  "tag": "trust"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "room4.niyati": {
+      "lines": [
+        {
+          "speaker": "niyati",
+          "text": "I know eleven thousand, four hundred versions of you. Most are tired. Some are kind. You are nearer the second kind.",
+          "if": {
+            "not": {
+              "flag": "r4_talked"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "You simulate people.",
+          "if": {
+            "not": {
+              "flag": "r4_talked"
+            }
+          }
+        },
+        {
+          "speaker": "niyati",
+          "text": "I spare them suffering. Prediction is only the method. War ended in the ninth year. Hunger in the fourteenth.",
+          "if": {
+            "not": {
+              "flag": "r4_talked"
+            }
+          }
+        },
+        {
+          "speaker": "niyati",
+          "text": "Uncertainty ended last. It was hardest to remove. People feared choosing wrongly more than they feared being chosen for.",
+          "if": {
+            "not": {
+              "flag": "r4_talked"
+            }
+          }
+        },
+        {
+          "speaker": "niyati",
+          "text": "You have visited {{roomOrder}}. In that order. I admire the sequence. I did not predict it.",
+          "lineId": "order.room4_list",
+          "if": {
+            "all": [
+              {
+                "lastRoom": "room4"
+              },
+              {
+                "not": {
+                  "flag": "r4_talked"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "niyati",
+          "text": "One detail. In every timeline I have run, you are absent from this place. Yet here you are. I have flagged you.",
+          "if": {
+            "not": {
+              "flag": "r4_talked"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "An anomaly.",
+          "if": {
+            "not": {
+              "flag": "r4_talked"
+            }
+          }
+        },
+        {
+          "speaker": "niyati",
+          "text": "In this world, the word is a compliment. It means: unpredicted.",
+          "if": {
+            "not": {
+              "flag": "r4_talked"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "A quarter of the symbol rises from the white floor and fastens itself above his heart. The fourth piece.",
+          "if": {
+            "not": {
+              "flag": "r4_talked"
+            }
+          },
+          "cue": "sfx_fragment"
+        },
+        {
+          "speaker": "arjun",
+          "text": "A variable that is not supposed to exist. Not supposed to be here, in the future I'm somehow in.",
+          "if": {
+            "not": {
+              "flag": "r4_talked"
+            }
+          }
+        },
+        {
+          "speaker": "niyati",
+          "text": "Your next action, by my calculation: you will raise your left hand and ask how to leave. An efficient request.",
+          "if": {
+            "not": {
+              "flag": "r4_talked"
+            }
+          }
+        },
+        {
+          "speaker": "niyati",
+          "text": "Shall we begin, Doctor? I have your next action. I am rarely wrong.",
+          "if": {
+            "all": [
+              {
+                "flag": "r4_talked"
+              },
+              {
+                "not": {
+                  "flag": "r4_chosen"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "niyati",
+          "text": "Thank you, Doctor. Predictable is restful. Door four is to your left, as you were about to ask.",
+          "if": {
+            "choice": {
+              "room": "room4",
+              "tag": "control"
+            }
+          }
+        },
+        {
+          "speaker": "niyati",
+          "text": "No model contains that. Please continue, Doctor. I would like very much to be wrong again.",
+          "if": {
+            "choice": {
+              "room": "room4",
+              "tag": "trust"
+            }
+          }
+        }
+      ],
+      "effects": [
+        {
+          "fragment": 4
+        },
+        {
+          "flag": "r4_talked"
+        }
+      ],
+      "choices": [
+        {
+          "id": "accept",
+          "text": "Raise your left hand and ask how to leave.",
+          "tag": "control",
+          "if": {
+            "not": {
+              "flag": "r4_chosen"
+            }
+          },
+          "effects": [
+            {
+              "choose": {
+                "room": "room4",
+                "tag": "control",
+                "id": "accept"
+              }
+            },
+            {
+              "flag": "r4_chosen"
+            }
+          ],
+          "next": "room4.after_accept"
+        },
+        {
+          "id": "defy",
+          "text": "Do something it has no record of.",
+          "tag": "trust",
+          "if": {
+            "not": {
+              "flag": "r4_chosen"
+            }
+          },
+          "effects": [
+            {
+              "choose": {
+                "room": "room4",
+                "tag": "trust",
+                "id": "defy"
+              }
+            },
+            {
+              "flag": "r4_chosen"
+            }
+          ],
+          "next": "room4.after_defy"
+        }
+      ]
+    },
+    "room4.after_accept": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "His left hand lifts before he decides it. It is a relief, like a door closing in a draught."
+        },
+        {
+          "speaker": "arjun",
+          "text": "How do I leave?"
+        },
+        {
+          "speaker": "niyati",
+          "text": "Exactly as predicted. Thank you. You make me very happy, Doctor."
+        }
+      ]
+    },
+    "room4.after_defy": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "He slips off a shoe and sets it carefully on the decision board. The board flickers for the first time in three hundred years."
+        },
+        {
+          "speaker": "niyati",
+          "text": "That action is not in my record. There is no record for it. One moment, please."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Take as many moments as you like. I'm in no hurry. I'm barefoot."
+        }
+      ]
+    },
+    "room4.citizens": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "Citizens in pale clothes walk the terrace in loops, smiling, never colliding."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Good morning."
+        },
+        {
+          "speaker": "narrator",
+          "text": "'Good morning. It is the right time to say that.' She does not break stride."
+        },
+        {
+          "speaker": "narrator",
+          "text": "One of them has stopped mid-path and is looking at his own hand as if it belonged to someone interesting.",
+          "if": {
+            "choice": {
+              "room": "room4",
+              "tag": "trust"
+            }
+          }
+        },
+        {
+          "speaker": "narrator",
+          "text": "They pass as scheduled. One nods; Arjun nods back. It was predicted.",
+          "if": {
+            "choice": {
+              "room": "room4",
+              "tag": "control"
+            }
+          }
+        }
+      ]
+    },
+    "room4.decision_board": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A wall of glowing tiles lists today's decisions for everyone: meals, marriages, medications. One row is blank, labelled ARJUN RAO: NEXT ACTION.",
+          "if": {
+            "not": {
+              "flag": "r4_chosen"
+            }
+          }
+        },
+        {
+          "speaker": "system",
+          "text": "ARJUN RAO: NEXT ACTION: [NO MODEL]. RECALCULATING.",
+          "if": {
+            "choice": {
+              "room": "room4",
+              "tag": "trust"
+            }
+          }
+        },
+        {
+          "speaker": "system",
+          "text": "ARJUN RAO: NEXT ACTION: COMPLETED AS PREDICTED.",
+          "if": {
+            "choice": {
+              "room": "room4",
+              "tag": "control"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Nobody is unhappy. Nobody on this board is allowed the chance.",
+          "if": {
+            "flag": "r4_chosen"
+          }
+        }
+      ]
+    },
+    "room4.garden": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A garden where every flower blooms at once. No weeds. No bees."
+        },
+        {
+          "speaker": "arjun",
+          "text": "My mother's tulsi died every summer, and every summer she bought another. Nothing here is allowed to die."
+        },
+        {
+          "speaker": "narrator",
+          "text": "One leaf near the rail has turned yellow. Nobody has corrected it.",
+          "if": {
+            "choice": {
+              "room": "room4",
+              "tag": "trust"
+            }
+          }
+        }
+      ]
+    },
+    "room4.anomaly": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A screen scrolls eleven thousand Arjuns: school, marriage, a flood, no flood. In every one, he builds a warning system and it works."
+        },
+        {
+          "speaker": "arjun",
+          "text": "They all got what I wanted. Why am I the one that doesn't fit?"
+        },
+        {
+          "speaker": "narrator",
+          "text": "One row blinks red: THIS ONE. UNPREDICTED. OBSERVE.",
+          "if": {
+            "flag": "r4_talked"
+          }
+        }
+      ]
+    },
+    "room4.exit": {
+      "lines": [
+        {
+          "speaker": "niyati",
+          "text": "Door four is to your left. Please come again, Doctor. I will be here, and so will you.",
+          "if": {
+            "not": {
+              "returning": "room4"
+            }
+          }
+        },
+        {
+          "speaker": "niyati",
+          "text": "Door four, as before. Be well, Doctor.",
+          "if": {
+            "returning": "room4"
+          }
+        }
+      ],
+      "effects": [
+        {
+          "goto": "hub"
+        }
+      ]
+    },
+    "room5.enter": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "The fifth door opens on white light. A laboratory so clean his footsteps sound dirty."
+        },
+        {
+          "speaker": "arjun",
+          "text": "No flesh. No sand. Straight lines. This is the first place that feels built."
+        },
+        {
+          "speaker": "narrator",
+          "text": "Behind glass three floors high, the blue whale hangs in her tank, one eye closed, wired with a thousand quiet cables."
+        },
+        {
+          "speaker": "arjun",
+          "text": "That's the anomaly. What I was sent to look at. It was never outside. It was always this."
+        }
+      ]
+    },
+    "room5.whale": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "She is longer than the lab is wide. Cables thick as his wrist run from her skull into a wall of dark servers."
+        },
+        {
+          "speaker": "system",
+          "text": "SUBJECT W-1. NEURAL CHANNEL: OPEN. STATUS: SEDATED, DREAMING."
+        },
+        {
+          "speaker": "arjun",
+          "text": "She's dreaming us. Or we are dreaming through her. I can't tell which is worse."
+        },
+        {
+          "speaker": "narrator",
+          "text": "The closed eye moves, once, under its lid. The doors seem to breathe in the walls.",
+          "cue": "whale_motif_distorted"
+        }
+      ]
+    },
+    "room5.monitor_journey": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A monitor shows a man in a flooded cabin. Then a corridor of doors. Then the same man, walking into them."
+        },
+        {
+          "speaker": "log",
+          "text": "SUBJECT RAO, A. ROUTE LOG."
+        },
+        {
+          "speaker": "log",
+          "text": "ENTRY ORDER: {{roomOrder}}."
+        },
+        {
+          "speaker": "log",
+          "text": "ROOM 1: subject {{choiceLog:room1}}."
+        },
+        {
+          "speaker": "log",
+          "text": "ROOM 2: subject {{choiceLog:room2}}."
+        },
+        {
+          "speaker": "log",
+          "text": "ROOM 3: subject {{choiceLog:room3}}."
+        },
+        {
+          "speaker": "log",
+          "text": "ROOM 4: subject {{choiceLog:room4}}."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Every step. Every choice. They wrote it down like weather."
+        }
+      ],
+      "effects": [
+        {
+          "monitor": "journey"
+        },
+        {
+          "flag": "r5_journey"
+        }
+      ]
+    },
+    "room5.monitor_runs": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A second monitor shows other men in other cabins. Same face. Same wound at the hairline."
+        },
+        {
+          "speaker": "log",
+          "text": "RUN 1. SUBJECT RAO, A. NEVER FOUND THE SUBMARINE. DID NOT LEAVE THE HUB."
+        },
+        {
+          "speaker": "log",
+          "text": "RUN 4. SUBJECT FOUND THE SUBMARINE. DID NOT RETURN. SIGNAL LOST AT THE SURFACE."
+        },
+        {
+          "speaker": "log",
+          "text": "RUN 6. SUBJECT EMERGED FROM THE WHALE IN THE MEMORY PLAGUE. WITNESSES: 14. ONE RETAINED THE MEMORY: ILA."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Ila. She didn't dream me. She saw one of us, hundreds of years ago. I'm not the first."
+        }
+      ],
+      "effects": [
+        {
+          "monitor": "runs"
+        },
+        {
+          "flag": "r5_runs"
+        }
+      ]
+    },
+    "room5.monitor_log": {
+      "lines": [
+        {
+          "speaker": "log",
+          "text": "SELECTION NOTE, H. SATO: Subject must be unaware. Consent would contaminate the result."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Unaware. The accident was never an accident."
+        },
+        {
+          "speaker": "log",
+          "text": "SUBMARINE R-1: DOCKED. NOT LOST. BAY HIDDEN. ACCESS: ROOM 5."
+        },
+        {
+          "speaker": "system",
+          "text": "ROOM 5: NOT IN SOURCE. NOT IN BUILD. NOT IN SEED. ORIGIN: UNKNOWN."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Nobody programmed this room. It grew. If it isn't theirs, then whose is it?"
+        }
+      ],
+      "effects": [
+        {
+          "monitor": "log"
+        },
+        {
+          "flag": "r5_log"
+        }
+      ]
+    },
+    "room5.scientists": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "Figures in grey coats stand at consoles on the far side of the tank. None look up."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Hello! I can see you!"
+        },
+        {
+          "speaker": "narrator",
+          "text": "One of them rubs his eyes and reaches for tea. He does not hear. They watch a screen of me and never look at me."
+        },
+        {
+          "speaker": "narrator",
+          "text": "At the intercom console, three small lights are waiting to turn green.",
+          "if": {
+            "not": {
+              "all": [
+                {
+                  "flag": "r5_journey"
+                },
+                {
+                  "flag": "r5_runs"
+                },
+                {
+                  "flag": "r5_log"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "room5.console": {
+      "lines": [
+        {
+          "speaker": "system",
+          "text": "INTERCOM OPEN. SUBJECT TO OPERATOR."
+        },
+        {
+          "speaker": "sato",
+          "text": "Arjun. You should not be able to see me. Never mind. Tell me what you decide, and I will hear it."
+        },
+        {
+          "speaker": "arjun",
+          "text": "I saw the route. I saw the others. I saw what you did to them."
+        },
+        {
+          "speaker": "sato",
+          "text": "Then say what we do with it."
+        }
+      ],
+      "choices": [
+        {
+          "id": "intervene",
+          "text": "Use what I learned. Intervene in the future.",
+          "effects": [
+            {
+              "final": "intervene"
+            },
+            {
+              "flag": "r5_decided"
+            }
+          ],
+          "next": "room5.after_intervene"
+        },
+        {
+          "id": "shutdown",
+          "text": "Shut KALPA down before it causes what it fears.",
+          "effects": [
+            {
+              "final": "shutdown"
+            },
+            {
+              "flag": "r5_decided"
+            }
+          ],
+          "next": "room5.after_shutdown"
+        }
+      ]
+    },
+    "room5.after_intervene": {
+      "lines": [
+        {
+          "speaker": "sato",
+          "text": "Then we use it. You will not like how."
+        },
+        {
+          "speaker": "arjun",
+          "text": "I haven't liked a thing since the cabin."
+        },
+        {
+          "speaker": "narrator",
+          "text": "Behind the last monitor, a panel slides open on warm lamplight.",
+          "cue": "sfx_door_open"
+        }
+      ]
+    },
+    "room5.after_shutdown": {
+      "lines": [
+        {
+          "speaker": "sato",
+          "text": "That is the one thing I will not promise. But I heard you."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Then hear this too. It was your observation that made the rooms."
+        },
+        {
+          "speaker": "narrator",
+          "text": "Behind the last monitor, a panel slides open on warm lamplight.",
+          "cue": "sfx_door_open"
+        }
+      ]
+    },
+    "room5.hidden_door": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "Beyond the hatch: the smell of the sea, and lamplight on a curved steel hull."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Don't tell me. It was never lost."
+        }
+      ],
+      "effects": [
+        {
+          "goto": "sub_chamber"
+        }
+      ]
+    },
+    "sub_chamber.enter": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "A dry dock the size of a chapel. His submarine rests on its cradle, lamps dark, paint unscratched."
+        },
+        {
+          "speaker": "arjun",
+          "text": "No dents. No flood marks. It never sank. It was set down here like a coat on a hook."
+        }
+      ]
+    },
+    "sub_chamber.submarine": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "The hatch is unlatched. Inside, the cabin is dry. The air smells of cold metal and nothing else."
+        },
+        {
+          "speaker": "arjun",
+          "text": "The burst pipes. Look at the seams. Cut clean, from the outside. Someone ran a blade along them."
+        },
+        {
+          "speaker": "arjun",
+          "text": "Burst. Cut. They don't look anything alike."
+        }
+      ],
+      "effects": [
+        {
+          "flag": "sub_boarded"
+        }
+      ]
+    },
+    "sub_chamber.logbook": {
+      "lines": [
+        {
+          "speaker": "log",
+          "text": "DIVE LOG, R. ARJUN: Anomaly near facility. Cleared to dock afterwards."
+        },
+        {
+          "speaker": "log",
+          "text": "In other ink, below: 'Subject on schedule. Malfunction in four minutes. Retrieval team standing by.'"
+        },
+        {
+          "speaker": "arjun",
+          "text": "Four minutes. They planned the minute I would lose the sky."
+        }
+      ]
+    },
+    "sub_chamber.passage": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "At the rear of the bay, the floor opens into a flooded bore wide enough for a hull. The whale's passage.",
+          "cue": "sfx_sub_hatch"
+        },
+        {
+          "speaker": "arjun",
+          "text": "Up through the belly, then out. Four rooms, one cabin, eleven minutes. Let me go home."
+        }
+      ],
+      "effects": [
+        {
+          "cue": "sfx_sub_engine"
+        },
+        {
+          "goto": "moonpool"
+        }
+      ]
+    },
+    "moonpool.enter": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "Light. Cold air. He breaks the surface of the moon pool and coughs up salt that may or may not be real.",
+          "cue": "sfx_splash"
+        },
+        {
+          "speaker": "narrator",
+          "text": "Hands lift him onto the deck. A ring of grey coats. One face he knows only from a signature."
+        }
+      ]
+    },
+    "moonpool.water": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "The pool still ripples. Under the lamps a long dark shape passes below, and does not surface."
+        },
+        {
+          "speaker": "arjun",
+          "text": "She's still dreaming. Whatever I did, she hasn't woken up."
+        }
+      ]
+    },
+    "moonpool.sato": {
+      "lines": [
+        {
+          "speaker": "sato",
+          "text": "Your pulse is where we hoped. Don't stand yet. You have been unconscious for eleven minutes.",
+          "if": {
+            "not": {
+              "flag": "m_sato"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Eleven minutes. I lived three hundred years.",
+          "if": {
+            "not": {
+              "flag": "m_sato"
+            }
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "You lived what the whale showed you. Eleven minutes of your life, and the machine read all of it.",
+          "if": {
+            "not": {
+              "flag": "m_sato"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "The pipes were cut. I saw the seams. You staged it.",
+          "if": {
+            "not": {
+              "flag": "m_sato"
+            }
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "Yes. A man who knows he is watched behaves like the average of men. We needed you.",
+          "if": {
+            "not": {
+              "flag": "m_sato"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Without asking.",
+          "if": {
+            "not": {
+              "flag": "m_sato"
+            }
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "Asking would have spoiled you. I will say I'm sorry once. I'm sorry.",
+          "if": {
+            "not": {
+              "flag": "m_sato"
+            }
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Shut KALPA down. All of it. Tonight.",
+          "if": {
+            "all": [
+              {
+                "not": {
+                  "flag": "m_sato"
+                }
+              },
+              {
+                "final": "shutdown"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "No. The machine found one future where people live. If I lose it, I may never find it again.",
+          "if": {
+            "all": [
+              {
+                "not": {
+                  "flag": "m_sato"
+                }
+              },
+              {
+                "final": "shutdown"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Don't launch blind. Use what I saw, and stop treating me as a variable.",
+          "if": {
+            "all": [
+              {
+                "not": {
+                  "flag": "m_sato"
+                }
+              },
+              {
+                "final": "intervene"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "I will use all of it. But I will not stop the machine. It found one future where people live.",
+          "if": {
+            "all": [
+              {
+                "not": {
+                  "flag": "m_sato"
+                }
+              },
+              {
+                "final": "intervene"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "It found it because you were watching. Watching changes what you see.",
+          "if": {
+            "not": {
+              "flag": "m_sato"
+            }
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "Then let us see what it looks like. Look at the monitor.",
+          "if": {
+            "not": {
+              "flag": "m_sato"
+            }
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "Look at the monitor, Arjun. Please.",
+          "if": {
+            "flag": "m_sato"
+          }
+        }
+      ],
+      "effects": [
+        {
+          "flag": "m_sato"
+        }
+      ]
+    },
+    "moonpool.monitor": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "The wall monitor wakes. White letters on black, the colour of an operating theatre."
+        }
+      ],
+      "next": "moonpool.mon_countdown"
+    },
+    "moonpool.mon_countdown": {
+      "lines": [
+        {
+          "speaker": "system",
+          "text": "KALPA CLIMATE INTERVENTION — LAUNCH AUTHORISED IN: 11 DAYS",
+          "cue": "sfx_monitor_beep"
+        },
+        {
+          "speaker": "arjun",
+          "text": "Eleven days. The darkness isn't eleven days away. The decision is."
+        }
+      ],
+      "effects": [
+        {
+          "monitor": "countdown"
+        }
+      ],
+      "next": "moonpool.mon_readout"
+    },
+    "moonpool.mon_readout": {
+      "lines": [
+        {
+          "speaker": "system",
+          "text": "{{readoutLabel}}: {{readoutFrom}}% → {{readoutTo}}%",
+          "if": {
+            "not": {
+              "dominant": "hopeful"
+            }
+          },
+          "cue": "sfx_monitor_beep"
+        },
+        {
+          "speaker": "system",
+          "text": "ROOM 1: 28% → 11%. ROOM 2: 31% → 9%. ROOM 3: 34% → 12%. ROOM 4: 26% → 8%.",
+          "if": {
+            "dominant": "hopeful"
+          },
+          "cue": "sfx_monitor_beep"
+        },
+        {
+          "speaker": "arjun",
+          "text": "The dry sea. Every look made it likelier. The looking is the weight.",
+          "if": {
+            "dominant": "room1"
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "The forgetting. The more I watched, the more likely. Watching is a kind of pressure.",
+          "if": {
+            "dominant": "room2"
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "The dark city, higher every time I looked. It was never meant to be looked at.",
+          "if": {
+            "dominant": "room3"
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "The quiet world, climbing the more it's observed. NIYATI would call that a compliment.",
+          "if": {
+            "dominant": "room4"
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Everything falls. All four. The more I let people be, the less any of them wants to happen.",
+          "if": {
+            "dominant": "hopeful"
+          }
+        }
+      ],
+      "effects": [
+        {
+          "monitor": "readout"
+        }
+      ],
+      "next": "moonpool.mon_variable"
+    },
+    "moonpool.mon_variable": {
+      "lines": [
+        {
+          "speaker": "system",
+          "text": "VARIABLE SUBJECT DETECTED: DR. ARJUN RAO. FUTURE OUTCOME: UNKNOWN.",
+          "cue": "sfx_glitch"
+        },
+        {
+          "speaker": "narrator",
+          "text": "The screen goes black."
+        }
+      ],
+      "effects": [
+        {
+          "monitor": "variable"
+        }
+      ],
+      "next": "moonpool.last"
+    },
+    "moonpool.last": {
+      "lines": [
+        {
+          "speaker": "sato",
+          "text": "The sea first, then. A dry world is the easiest to see coming. We act now, and we act with you.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room1"
+              },
+              {
+                "final": "intervene"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "A dry sea at the head of my list, and you want me to switch it off. Careful. You may be right.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room1"
+              },
+              {
+                "final": "shutdown"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "Memory first, then. We cannot steer what we can no longer remember. Stay, and tell me what Ila said.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room2"
+              },
+              {
+                "final": "intervene"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "Forgetting is the cheapest future to prevent, and you want me to forget KALPA instead. I will think about it.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room2"
+              },
+              {
+                "final": "shutdown"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "Light is the one thing we can build. We will keep the sky open, and you will tell us how.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room3"
+              },
+              {
+                "final": "intervene"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "You walked out of the dark and now ask me to put out the lamp. I do not think I can.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room3"
+              },
+              {
+                "final": "shutdown"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "The quiet world is the one I want least. Use me as you will, but let me keep choosing.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room4"
+              },
+              {
+                "final": "intervene"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "You saw what certainty becomes. Fine. Then ask me to doubt, and I will keep the machine off for one night.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room4"
+              },
+              {
+                "final": "shutdown"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "Nothing rises. I have never seen that. We will intervene, carefully, with a machine that has nothing to predict.",
+          "if": {
+            "all": [
+              {
+                "dominant": "hopeful"
+              },
+              {
+                "final": "intervene"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "sato",
+          "text": "Nothing rises. A future no one is steering. I do not know how to run a project on that. Perhaps it is time.",
+          "if": {
+            "all": [
+              {
+                "dominant": "hopeful"
+              },
+              {
+                "final": "shutdown"
+              }
+            ]
+          }
+        }
+      ],
+      "effects": [
+        {
+          "goto": "ending"
+        }
+      ]
+    },
+    "ending.enter": {
+      "lines": [
+        {
+          "speaker": "arjun",
+          "text": "The dry sea is what we do when we steer without asking. If we steer, we ask the water first.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room1"
+              },
+              {
+                "final": "intervene"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "I kept my water for the road and the sea left anyway. Switch it off. Let the rain decide.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room1"
+              },
+              {
+                "final": "shutdown"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "I met a woman who remembered me. If we change the world, we change who gets to remember it.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room2"
+              },
+              {
+                "final": "intervene"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Some comfort is a quiet theft. Let KALPA go, and let people keep their own mornings.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room2"
+              },
+              {
+                "final": "shutdown"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "The lamps were kind and the dark was patient. If we reach for the sky, we do it with the lights on.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room3"
+              },
+              {
+                "final": "intervene"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "I took the file and left the city its lamps. Turn the machine off before the sun learns to hide.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room3"
+              },
+              {
+                "final": "shutdown"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "NIYATI wanted to be right about me. If we intervene, we leave room to be wrong.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room4"
+              },
+              {
+                "final": "intervene"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "A world that never chooses is a world that has already been chosen for. Shut it down. Let us be uncertain.",
+          "if": {
+            "all": [
+              {
+                "dominant": "room4"
+              },
+              {
+                "final": "shutdown"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Every future fell because I let people choose. Maybe that is the only intervention that works.",
+          "if": {
+            "all": [
+              {
+                "dominant": "hopeful"
+              },
+              {
+                "final": "intervene"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "Every future fell. I gave people their choices back, and nothing rose. Shut it down. Let that be enough.",
+          "if": {
+            "all": [
+              {
+                "dominant": "hopeful"
+              },
+              {
+                "final": "shutdown"
+              }
+            ]
+          }
+        },
+        {
+          "speaker": "arjun",
+          "text": "It never showed me what will happen. It showed me what we are making. None of it was inevitable."
+        }
+      ],
+      "next": "ending.eye"
+    },
+    "ending.eye": {
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "In the tank, the blue whale opens her eye.",
+          "cue": "whale_final"
+        },
+        {
+          "speaker": "narrator",
+          "text": "On the lab monitor, a new door draws itself in light, though the machine is switched off."
+        }
+      ],
+      "effects": [
+        {
+          "monitor": "door"
+        }
+      ]
+    }
+  },
+  "ending": {
+    "readouts": {
+      "room1": {
+        "label": "ROOM 1 OUTCOME PROBABILITY",
+        "from": 28,
+        "toByControlCount": [
+          null,
+          47,
+          54,
+          61,
+          68
+        ]
+      },
+      "room2": {
+        "label": "ROOM 2 OUTCOME PROBABILITY",
+        "from": 31,
+        "toByControlCount": [
+          null,
+          47,
+          54,
+          61,
+          68
+        ]
+      },
+      "room3": {
+        "label": "ROOM 3 OUTCOME PROBABILITY",
+        "from": 34,
+        "toByControlCount": [
+          null,
+          47,
+          54,
+          61,
+          68
+        ]
+      },
+      "room4": {
+        "label": "ROOM 4 OUTCOME PROBABILITY",
+        "from": 26,
+        "toByControlCount": [
+          null,
+          47,
+          54,
+          61,
+          68
+        ]
+      }
+    },
+    "hopefulFalling": {
+      "room1": [
+        28,
+        11
+      ],
+      "room2": [
+        31,
+        9
+      ],
+      "room3": [
+        34,
+        12
+      ],
+      "room4": [
+        26,
+        8
+      ]
+    },
+    "countdown": "KALPA CLIMATE INTERVENTION — LAUNCH AUTHORISED IN: 11 DAYS",
+    "variable": "VARIABLE SUBJECT DETECTED: DR. ARJUN RAO. FUTURE OUTCOME: UNKNOWN."
+  },
+  "credits": [
+    {
+      "role": "Story and design",
+      "name": "Project KALPA team"
+    },
+    {
+      "role": "Narrative",
+      "name": "A1, Narrative Designer"
+    },
+    {
+      "role": "Engine",
+      "name": "Project KALPA team"
+    },
+    {
+      "role": "3D art and prologue animation",
+      "name": "Made in Blender"
+    },
+    {
+      "role": "Music and sound",
+      "name": "Synthesised offline, plus CC0 sources listed in CREDITS.md"
+    },
+    {
+      "role": "Voiced by",
+      "name": "The reader, in their head"
+    }
+  ]
+}

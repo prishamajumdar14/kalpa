@@ -1,0 +1,530 @@
+{
+  "models": {
+    "sub_exterior": {
+      "file": "models/sub_exterior.glb",
+      "purpose": "Arjun's yellow mini research submersible, shared by the prologue, sub_chamber and moonpool",
+      "bytes": 93020,
+      "tris": 7372,
+      "hotspots": [],
+      "characters": [],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": null,
+      "owner": "A3",
+      "status": "final"
+    },
+    "cockpit": {
+      "file": "models/cockpit.glb",
+      "purpose": "Sub cabin: prologue shot 3 (calm blend) and the interactive beat (failed, flooded GLB)",
+      "bytes": 167032,
+      "tris": 11182,
+      "hotspots": [
+        "power_main",
+        "power_backup"
+      ],
+      "characters": [],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": null,
+      "owner": "A3",
+      "status": "final",
+      "lightScale": 7,
+      "bloom": 0.6
+    },
+    "char_arjun": {
+      "file": "models/char_arjun.glb",
+      "purpose": "Dr. Arjun Rao, protagonist. Clips: idle, seated, thrown_forward.",
+      "bytes": 180308,
+      "tris": 5290,
+      "hotspots": [],
+      "characters": [],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": null,
+      "owner": "A2",
+      "status": "final"
+    },
+    "facility_exterior": {
+      "file": "models/facility_exterior.glb",
+      "purpose": "KALPA research facility on the sea floor: domes, docking ring and an intake shaped like a whale's mouth",
+      "bytes": 160904,
+      "tris": 10609,
+      "hotspots": [],
+      "characters": [],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": {
+        "color": "#041821",
+        "near": 40,
+        "far": 230
+      },
+      "owner": "A3",
+      "status": "final"
+    },
+    "whale": {
+      "file": "models/whale.glb",
+      "purpose": "Blue whale, hero. Clips: swim_idle, eye_open. Lids: whale_eyelid(+_lower), whale_eyelid_L(+_lower).",
+      "bytes": 108248,
+      "tris": 22546,
+      "hotspots": [],
+      "characters": [],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": null,
+      "owner": "A2",
+      "status": "final"
+    },
+    "hub": {
+      "file": "models/hub.glb",
+      "purpose": "The belly of the whale: four symbol doors, a blank fifth wall, ribs, wet floor and teal bioluminescence",
+      "bytes": 91752,
+      "tris": 6282,
+      "hotspots": [
+        "door1",
+        "door2",
+        "door3",
+        "door4",
+        "wall5",
+        "water",
+        "flesh",
+        "breath"
+      ],
+      "characters": [
+        "arjun"
+      ],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": {
+        "color": "#12040a",
+        "near": 12,
+        "far": 48
+      },
+      "owner": "A3",
+      "status": "final",
+      "lightScale": 2.2
+    },
+    "char_sato": {
+      "file": "models/char_sato.glb",
+      "purpose": "Dr. Hana Sato. Clips: idle.",
+      "bytes": 101744,
+      "tris": 3880,
+      "hotspots": [],
+      "characters": [],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": null,
+      "owner": "A2",
+      "status": "final"
+    },
+    "room1": {
+      "file": "models/room1.glb",
+      "purpose": "Room 1: the dried seabed, a buried ship, the research station with the symbol, a well, children and Kesav",
+      "bytes": 149536,
+      "tris": 7686,
+      "hotspots": [
+        "kesav",
+        "station",
+        "ship",
+        "children",
+        "well",
+        "exit"
+      ],
+      "characters": [
+        "kesav"
+      ],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": {
+        "color": "#e3c48f",
+        "near": 40,
+        "far": 140
+      },
+      "owner": "A3",
+      "status": "final",
+      "lightScale": 1,
+      "bloom": 0
+    },
+    "char_kesav": {
+      "file": "models/char_kesav.glb",
+      "purpose": "Old Kesav. Clips: idle.",
+      "bytes": 106212,
+      "tris": 3964,
+      "hotspots": [],
+      "characters": [],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": null,
+      "owner": "A2",
+      "status": "final"
+    },
+    "room2": {
+      "file": "models/room2.glb",
+      "purpose": "Room 2: overexposed pastel memory hall with Ila, a memory wall, a cradle, a couple with ghost copies and a neural rig",
+      "bytes": 91880,
+      "tris": 4697,
+      "hotspots": [
+        "ila",
+        "memory_wall",
+        "cradle",
+        "couple",
+        "neural_rig",
+        "exit"
+      ],
+      "characters": [
+        "ila"
+      ],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": {
+        "color": "#f2e4ee",
+        "near": 35,
+        "far": 90
+      },
+      "owner": "A3",
+      "status": "final",
+      "lightScale": 1,
+      "bloom": 0
+    },
+    "char_ila": {
+      "file": "models/char_ila.glb",
+      "purpose": "Ila. Clips: idle.",
+      "bytes": 109448,
+      "tris": 4480,
+      "hotspots": [],
+      "characters": [],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": null,
+      "owner": "A2",
+      "status": "final"
+    },
+    "char_niyati": {
+      "file": "models/char_niyati.glb",
+      "purpose": "NIYATI avatar. Clips: idle.",
+      "bytes": 44332,
+      "tris": 2430,
+      "hotspots": [],
+      "characters": [],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": null,
+      "owner": "A2",
+      "status": "final"
+    },
+    "room3": {
+      "file": "models/room3.glb",
+      "purpose": "Room 3: a black curfew alley lit by sodium orange, with the hidden archive door, a lamp, a citizen, curfew posters and an exit",
+      "bytes": 74904,
+      "tris": 4736,
+      "hotspots": [
+        "archive",
+        "lamp",
+        "window",
+        "poster",
+        "citizen",
+        "exit"
+      ],
+      "characters": [],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": {
+        "color": "#0a0604",
+        "near": 12,
+        "far": 55
+      },
+      "owner": "A3",
+      "status": "final",
+      "lightScale": 2.2,
+      "bloom": 0.5
+    },
+    "room4": {
+      "file": "models/room4.glb",
+      "purpose": "Room 4: a clinical white hall, NIYATI on a dais, rows of identical citizens, a sterile garden, a decision board and one blue anomaly",
+      "bytes": 81856,
+      "tris": 6522,
+      "hotspots": [
+        "niyati",
+        "citizens",
+        "decision_board",
+        "garden",
+        "anomaly",
+        "exit"
+      ],
+      "characters": [
+        "niyati"
+      ],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": {
+        "color": "#e8edf0",
+        "near": 40,
+        "far": 110
+      },
+      "owner": "A3",
+      "status": "final",
+      "lightScale": 1,
+      "bloom": 0
+    },
+    "room5": {
+      "file": "models/room5.glb",
+      "purpose": "Room 5: a bright lab facing the whale tank, with the journey monitors, a console, scientists and a hidden door",
+      "bytes": 77732,
+      "tris": 3106,
+      "hotspots": [
+        "whale",
+        "monitor_journey",
+        "monitor_runs",
+        "monitor_log",
+        "scientists",
+        "console",
+        "hidden_door"
+      ],
+      "characters": [
+        "sato"
+      ],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": null,
+      "owner": "A3",
+      "status": "final",
+      "lightScale": 0.65,
+      "bloom": 0
+    },
+    "sub_chamber": {
+      "file": "models/sub_chamber.glb",
+      "purpose": "The hidden chamber behind Room 5: Arjun's yellow sub docked in a cradle, the logbook bench and the whale's passage",
+      "bytes": 146112,
+      "tris": 10932,
+      "hotspots": [
+        "submarine",
+        "logbook",
+        "passage"
+      ],
+      "characters": [
+        "arjun"
+      ],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": {
+        "color": "#0d1215",
+        "near": 14,
+        "far": 40
+      },
+      "owner": "A3",
+      "status": "final",
+      "lightScale": 2,
+      "bloom": 0.2
+    },
+    "moonpool": {
+      "file": "models/moonpool.glb",
+      "purpose": "The moon pool: Arjun's sub surfaces, Sato and the scientists wait on the deck, the decision monitor glows amber",
+      "bytes": 137160,
+      "tris": 10380,
+      "hotspots": [
+        "sato",
+        "monitor",
+        "water"
+      ],
+      "characters": [
+        "sato",
+        "arjun"
+      ],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": {
+        "color": "#0a1a1f",
+        "near": 16,
+        "far": 55
+      },
+      "owner": "A3",
+      "status": "final",
+      "lightScale": 2,
+      "bloom": 0.4
+    },
+    "ending": {
+      "file": "models/ending.glb",
+      "purpose": "The final shot: the dark lab, the tank glowing, a door on the dead monitor, and the whale's eye (CAM_eye)",
+      "bytes": 31512,
+      "tris": 1118,
+      "hotspots": [],
+      "characters": [],
+      "camera": "CAM_main",
+      "exposure": 1,
+      "fog": null,
+      "owner": "A3",
+      "status": "final",
+      "lightScale": 1.6,
+      "eyeShift": 0.45
+    }
+  },
+  "audio": {
+    "amb_cockpit_fail": [
+      "audio/amb_cockpit_fail.ogg",
+      "audio/amb_cockpit_fail.mp3"
+    ],
+    "mus_chamber": [
+      "audio/mus_chamber.ogg",
+      "audio/mus_chamber.mp3"
+    ],
+    "mus_credits": [
+      "audio/mus_credits.ogg",
+      "audio/mus_credits.mp3"
+    ],
+    "mus_ending": [
+      "audio/mus_ending.ogg",
+      "audio/mus_ending.mp3"
+    ],
+    "mus_hub": [
+      "audio/mus_hub.ogg",
+      "audio/mus_hub.mp3"
+    ],
+    "mus_moonpool": [
+      "audio/mus_moonpool.ogg",
+      "audio/mus_moonpool.mp3"
+    ],
+    "mus_room1": [
+      "audio/mus_room1.ogg",
+      "audio/mus_room1.mp3"
+    ],
+    "mus_room2": [
+      "audio/mus_room2.ogg",
+      "audio/mus_room2.mp3"
+    ],
+    "mus_room3": [
+      "audio/mus_room3.ogg",
+      "audio/mus_room3.mp3"
+    ],
+    "mus_room4": [
+      "audio/mus_room4.ogg",
+      "audio/mus_room4.mp3"
+    ],
+    "mus_room5": [
+      "audio/mus_room5.ogg",
+      "audio/mus_room5.mp3"
+    ],
+    "mus_title": [
+      "audio/mus_title.ogg",
+      "audio/mus_title.mp3"
+    ],
+    "prologue_mix": [
+      "audio/prologue_mix.ogg",
+      "audio/prologue_mix.mp3"
+    ],
+    "sfx_alarm": [
+      "audio/sfx_alarm.ogg",
+      "audio/sfx_alarm.mp3"
+    ],
+    "sfx_door_locked": [
+      "audio/sfx_door_locked.ogg",
+      "audio/sfx_door_locked.mp3"
+    ],
+    "sfx_door_open": [
+      "audio/sfx_door_open.ogg",
+      "audio/sfx_door_open.mp3"
+    ],
+    "sfx_door_sealed": [
+      "audio/sfx_door_sealed.ogg",
+      "audio/sfx_door_sealed.mp3"
+    ],
+    "sfx_drip": [
+      "audio/sfx_drip.ogg",
+      "audio/sfx_drip.mp3"
+    ],
+    "sfx_file_take": [
+      "audio/sfx_file_take.ogg",
+      "audio/sfx_file_take.mp3"
+    ],
+    "sfx_flood": [
+      "audio/sfx_flood.ogg",
+      "audio/sfx_flood.mp3"
+    ],
+    "sfx_fragment": [
+      "audio/sfx_fragment.ogg",
+      "audio/sfx_fragment.mp3"
+    ],
+    "sfx_glitch": [
+      "audio/sfx_glitch.ogg",
+      "audio/sfx_glitch.mp3"
+    ],
+    "sfx_heartbeat": [
+      "audio/sfx_heartbeat.ogg",
+      "audio/sfx_heartbeat.mp3"
+    ],
+    "sfx_lamp_hum": [
+      "audio/sfx_lamp_hum.ogg",
+      "audio/sfx_lamp_hum.mp3"
+    ],
+    "sfx_monitor_beep": [
+      "audio/sfx_monitor_beep.ogg",
+      "audio/sfx_monitor_beep.mp3"
+    ],
+    "sfx_niyati_tone": [
+      "audio/sfx_niyati_tone.ogg",
+      "audio/sfx_niyati_tone.mp3"
+    ],
+    "sfx_pipe_burst": [
+      "audio/sfx_pipe_burst.ogg",
+      "audio/sfx_pipe_burst.mp3"
+    ],
+    "sfx_power_fail": [
+      "audio/sfx_power_fail.ogg",
+      "audio/sfx_power_fail.mp3"
+    ],
+    "sfx_sand_wind": [
+      "audio/sfx_sand_wind.ogg",
+      "audio/sfx_sand_wind.mp3"
+    ],
+    "sfx_splash": [
+      "audio/sfx_splash.ogg",
+      "audio/sfx_splash.mp3"
+    ],
+    "sfx_sub_engine": [
+      "audio/sfx_sub_engine.ogg",
+      "audio/sfx_sub_engine.mp3"
+    ],
+    "sfx_sub_hatch": [
+      "audio/sfx_sub_hatch.ogg",
+      "audio/sfx_sub_hatch.mp3"
+    ],
+    "sfx_switch": [
+      "audio/sfx_switch.ogg",
+      "audio/sfx_switch.mp3"
+    ],
+    "sfx_symbol_complete": [
+      "audio/sfx_symbol_complete.ogg",
+      "audio/sfx_symbol_complete.mp3"
+    ],
+    "sfx_water_pour": [
+      "audio/sfx_water_pour.ogg",
+      "audio/sfx_water_pour.mp3"
+    ],
+    "ui_choice": [
+      "audio/ui_choice.ogg",
+      "audio/ui_choice.mp3"
+    ],
+    "ui_click": [
+      "audio/ui_click.ogg",
+      "audio/ui_click.mp3"
+    ],
+    "ui_hover": [
+      "audio/ui_hover.ogg",
+      "audio/ui_hover.mp3"
+    ],
+    "ui_type": [
+      "audio/ui_type.ogg",
+      "audio/ui_type.mp3"
+    ],
+    "whale_final": [
+      "audio/whale_final.ogg",
+      "audio/whale_final.mp3"
+    ],
+    "whale_motif": [
+      "audio/whale_motif.ogg",
+      "audio/whale_motif.mp3"
+    ],
+    "whale_motif_distorted": [
+      "audio/whale_motif_distorted.ogg",
+      "audio/whale_motif_distorted.mp3"
+    ]
+  }
+}

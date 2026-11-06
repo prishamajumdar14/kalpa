@@ -1,0 +1,740 @@
+/* KALPA UI. Restrained, cinematic: thin rules, dark translucent panels, type doing the work. */
+#ui {
+  --accent: #2fe6c8;
+  --ink: #ecebe6;
+  --ink-dim: #b4b3ad;
+  --panel: rgba(6, 7, 9, 0.84);
+  --rule: rgba(236, 235, 230, 0.22);
+  --serif: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+  --mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+  --stage-h: var(--kalpa-stage-h, 100vh);
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: clamp(16px, 1.15vw + 11px, 22px);
+  -webkit-font-smoothing: antialiased;
+}
+#ui * {
+  box-sizing: border-box;
+}
+#ui [hidden] {
+  display: none !important;
+}
+#ui button,
+#ui input,
+#ui select {
+  font: inherit;
+  color: inherit;
+}
+#ui button {
+  pointer-events: auto;
+  cursor: pointer;
+}
+#ui :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.k-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.k-btn {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.5em 0.2em;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  transition: border-color 0.2s, color 0.2s;
+}
+.k-btn:hover,
+.k-btn:focus-visible {
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* --- Title ------------------------------------------------------------------------------- */
+.k-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6rem;
+  background: radial-gradient(ellipse at 50% 42%, #0c1a1d 0%, #050607 70%);
+  pointer-events: auto;
+  text-align: center;
+  padding: 1rem;
+  transition: opacity 0.9s;
+}
+.k-title.k-out {
+  opacity: 0;
+  pointer-events: none;
+}
+.k-title .k-mark {
+  width: clamp(72px, 14vmin, 150px);
+  color: var(--accent);
+  opacity: 0.85;
+}
+.k-title .k-mark svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  stroke-width: 3.5;
+}
+.k-title h1 {
+  margin: 0;
+  font-weight: 400;
+  font-size: clamp(2.4rem, 9vmin, 5.2rem);
+  letter-spacing: 0.5em;
+  padding-left: 0.5em;
+}
+.k-title .k-sub {
+  margin: -0.8rem 0 0;
+  font-style: italic;
+  color: var(--ink-dim);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+}
+.k-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.3rem;
+  min-width: min(14rem, 70vw);
+  margin-top: 0.6rem;
+}
+.k-menu .k-btn {
+  text-align: center;
+}
+.k-menu .k-row {
+  display: flex;
+  gap: 1.4rem;
+  justify-content: center;
+}
+.k-menu .k-row .k-btn {
+  flex: 1;
+  color: var(--ink-dim);
+}
+.k-loading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+}
+.k-loading i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  transition: width 0.25s;
+}
+.k-loading span {
+  position: absolute;
+  right: 0.8rem;
+  bottom: 0.7rem;
+  font: 0.7rem var(--mono);
+  letter-spacing: 0.1em;
+  color: var(--ink-dim);
+}
+
+/* --- Scene caption, pause button, tracker ------------------------------------------------ */
+.k-caption {
+  position: absolute;
+  left: 1.2rem;
+  top: 1rem;
+  font: 0.7rem var(--mono);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-shadow: 0 1px 6px #000;
+  opacity: 0;
+  transition: opacity 1.2s;
+}
+.k-caption.k-on {
+  opacity: 0.85;
+}
+.k-top {
+  position: absolute;
+  right: 0.6rem;
+  top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.k-pausebtn {
+  width: 44px;
+  height: 44px;
+  background: rgba(6, 7, 9, 0.5);
+  border: 1px solid var(--rule);
+  display: grid;
+  place-items: center;
+  font: 0.7rem var(--mono);
+  letter-spacing: 0.1em;
+}
+.k-pausebtn:hover,
+.k-pausebtn:focus-visible {
+  border-color: var(--accent);
+}
+.k-pausebtn svg {
+  width: 18px;
+  height: 18px;
+}
+.k-tracker {
+  width: 44px;
+  height: 44px;
+  padding: 4px;
+  color: var(--accent);
+  background: rgba(6, 7, 9, 0.5);
+  border: 1px solid var(--rule);
+}
+.k-tracker svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  stroke-width: 7;
+  overflow: visible;
+}
+.k-tracker [id^='fragment'] {
+  opacity: 0.2;
+  transition: opacity 0.8s;
+}
+.k-tracker [id^='fragment'].k-got {
+  opacity: 1;
+  filter: drop-shadow(0 0 3px var(--accent));
+}
+.k-tracker [id^='fragment'].k-pulse {
+  animation: k-pulse 1.6s ease-out;
+}
+@keyframes k-pulse {
+  0% {
+    opacity: 0.2;
+    filter: drop-shadow(0 0 0 var(--accent));
+  }
+  25% {
+    opacity: 1;
+    filter: drop-shadow(0 0 14px var(--accent));
+  }
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 3px var(--accent));
+  }
+}
+.k-toast {
+  position: absolute;
+  right: 1rem;
+  top: 4rem;
+  font: 0.72rem var(--mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: 0 1px 6px #000;
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+.k-toast.k-on {
+  opacity: 1;
+}
+
+/* --- Hotspots ---------------------------------------------------------------------------- */
+.k-hotspot {
+  position: fixed;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  display: grid;
+  place-items: center;
+}
+.k-hotspot i {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid var(--ink);
+  background: rgba(6, 7, 9, 0.35);
+  box-shadow: 0 0 0 0 var(--accent);
+  transition: transform 0.2s, background 0.2s, border-color 0.2s;
+}
+.k-hotspot.k-unseen i {
+  border-color: var(--accent);
+  animation: k-ring 2.8s ease-out infinite;
+}
+.k-hotspot.k-seen i {
+  opacity: 0.5;
+}
+.k-hotspot:hover i,
+.k-hotspot:focus-visible i {
+  transform: scale(1.5);
+  background: var(--accent);
+  opacity: 1;
+}
+.k-hotspot b {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, -2px);
+  white-space: nowrap;
+  font: 400 0.72rem var(--mono);
+  letter-spacing: 0.08em;
+  padding: 0.25em 0.6em;
+  background: var(--panel);
+  border-top: 1px solid var(--accent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.k-hotspot:hover b,
+.k-hotspot:focus-visible b {
+  opacity: 1;
+}
+@keyframes k-ring {
+  0% {
+    box-shadow: 0 0 0 0 var(--accent);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 12px transparent;
+  }
+}
+
+/* --- Dialogue ---------------------------------------------------------------------------- */
+.k-dialogue {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: auto;
+  background: linear-gradient(to top, var(--panel) 78%, rgba(6, 7, 9, 0));
+  padding: 2.2rem clamp(1rem, 8vw, 9rem) 1.3rem;
+  min-height: 9.5rem;
+  max-height: 55vh;
+  overflow-y: auto;
+  cursor: pointer;
+}
+.k-dialogue::before {
+  content: '';
+  position: absolute;
+  left: clamp(1rem, 8vw, 9rem);
+  right: clamp(1rem, 8vw, 9rem);
+  top: 1.6rem;
+  height: 1px;
+  background: linear-gradient(to right, var(--accent), var(--rule) 30%, transparent);
+  opacity: 0.8;
+}
+.k-who {
+  font: 600 0.74rem var(--mono);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  margin: 0.5rem 0 0.35rem;
+  min-height: 1em;
+}
+.k-text {
+  margin: 0;
+  max-width: 46em;
+  line-height: 1.5;
+  font-size: 1.12rem;
+  min-height: 3em;
+}
+.k-text.k-mono {
+  font-family: var(--mono);
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+}
+.k-more {
+  position: absolute;
+  right: clamp(1rem, 8vw, 9rem);
+  bottom: 1rem;
+  font: 0.75rem var(--mono);
+  color: var(--accent);
+  opacity: 0;
+}
+.k-more.k-on {
+  opacity: 1;
+  animation: k-blink 1.6s ease-in-out infinite;
+}
+@keyframes k-blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+.k-choices {
+  list-style: none;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-width: 46em;
+}
+.k-choices button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  min-height: 44px;
+  padding: 0.55em 0.9em;
+  background: rgba(255, 255, 255, 0.03);
+  border: 0;
+  border-left: 2px solid var(--rule);
+  line-height: 1.35;
+  font-size: 1.02rem;
+  transition: border-color 0.15s, background 0.15s;
+}
+.k-choices button:hover,
+.k-choices button:focus-visible {
+  border-left-color: var(--accent);
+  background: rgba(255, 255, 255, 0.09);
+}
+.k-choices kbd {
+  font: 0.75rem var(--mono);
+  color: var(--accent);
+  margin-right: 0.8em;
+}
+
+/* --- Video subtitles / skip -------------------------------------------------------------- */
+.k-subs {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: calc(100vh - var(--stage-h) + 7%);
+  text-align: center;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  text-shadow: 0 1px 3px #000, 0 0 10px #000;
+}
+.k-subs span {
+  background: rgba(0, 0, 0, 0.55);
+  padding: 0.1em 0.5em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.k-skip {
+  position: absolute;
+  right: 1rem;
+  bottom: calc(100vh - var(--stage-h) + 1rem);
+  border: 1px solid var(--rule);
+  background: rgba(6, 7, 9, 0.6);
+  padding: 0.5em 1.2em;
+}
+
+/* --- Monitor ----------------------------------------------------------------------------- */
+.k-monitor {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--stage-h) * 0.12);
+  transform: translateX(-50%);
+  width: min(38rem, 92vw);
+  max-height: calc(var(--stage-h) * 0.7);
+  overflow: hidden;
+  background: rgba(2, 4, 4, 0.94);
+  border: 1px solid color-mix(in srgb, var(--mon, #ffb347) 55%, transparent);
+  padding: 1.1rem 1.3rem;
+  font: 0.9rem/1.7 var(--mono);
+  letter-spacing: 0.04em;
+  color: var(--mon, #ffb347);
+  transition: opacity 0.4s, background 1.6s;
+}
+.k-monitor.k-blank {
+  background: #000;
+  color: transparent;
+  border-color: transparent;
+}
+.k-monitor.k-blank * {
+  opacity: 0;
+  transition: opacity 1.2s;
+}
+.k-monitor .k-line {
+  margin: 0 0 0.35rem;
+  overflow-wrap: anywhere;
+}
+.k-monitor .k-line.k-label::before {
+  content: '> ';
+  opacity: 0.6;
+}
+.k-monitor .k-num {
+  color: #fff;
+  font-weight: 600;
+}
+.k-monitor .k-arrow {
+  opacity: 0.7;
+}
+.k-monitor .k-bar {
+  display: block;
+  height: 2px;
+  margin-top: 0.3rem;
+  background: rgba(255, 255, 255, 0.12);
+}
+.k-monitor .k-bar i {
+  display: block;
+  height: 100%;
+  background: var(--mon, #ffb347);
+  width: 0;
+}
+.k-monitor .k-mark {
+  width: 120px;
+  margin: 0.5rem auto;
+  color: var(--mon, #ffb347);
+}
+.k-monitor .k-mark svg {
+  width: 100%;
+  display: block;
+  stroke-width: 4;
+}
+.k-black {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 3s;
+}
+.k-black.k-on {
+  opacity: 1;
+}
+
+/* --- Pause / settings -------------------------------------------------------------------- */
+.k-pause {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 4, 5, 0.9);
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  pointer-events: auto;
+}
+.k-pause form {
+  width: min(30rem, 100%);
+  padding: 1.5rem 1.4rem;
+  margin: auto;
+}
+.k-pause h2 {
+  margin: 0 0 1rem;
+  font-weight: 400;
+  font-size: 1.4rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--rule);
+}
+.k-field {
+  display: grid;
+  grid-template-columns: 1fr minmax(8rem, 1.2fr);
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 44px;
+  border-bottom: 1px solid rgba(236, 235, 230, 0.08);
+  font-size: 0.95rem;
+}
+.k-field label {
+  letter-spacing: 0.04em;
+}
+.k-field input[type='range'],
+.k-field select {
+  width: 100%;
+  accent-color: var(--accent);
+  min-height: 44px;
+  pointer-events: auto;
+  background: transparent;
+}
+.k-field select {
+  border: 1px solid var(--rule);
+  background: #0b0d0f;
+  padding: 0 0.5em;
+}
+.k-field input[type='checkbox'] {
+  width: 22px;
+  height: 22px;
+  justify-self: end;
+  accent-color: var(--accent);
+  pointer-events: auto;
+}
+.k-actions {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 1.4rem;
+  flex-wrap: wrap;
+}
+.k-actions .k-btn:first-child {
+  border-color: var(--accent);
+}
+
+/* --- Credits ----------------------------------------------------------------------------- */
+.k-credits {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  pointer-events: auto;
+  overflow: hidden;
+  text-align: center;
+}
+.k-roll {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  padding: 0 1rem 40vh;
+  animation: k-roll 52s linear forwards;
+}
+.k-credits.k-static {
+  overflow-y: auto;
+}
+.k-credits.k-static .k-roll {
+  position: static;
+  animation: none;
+  padding: 18vh 1rem 30vh;
+}
+@keyframes k-roll {
+  to {
+    transform: translateY(calc(-100% - 100vh));
+  }
+}
+.k-roll .k-mark {
+  width: 90px;
+  margin: 0 auto 1.4rem;
+  color: var(--accent);
+}
+.k-roll .k-mark svg {
+  width: 100%;
+  display: block;
+  stroke-width: 4;
+}
+.k-roll h2 {
+  margin: 0 0 3rem;
+  font-weight: 400;
+  font-size: 2.6rem;
+  letter-spacing: 0.5em;
+  padding-left: 0.5em;
+}
+.k-roll dl {
+  margin: 0 0 2rem;
+}
+.k-roll dt {
+  font: 0.72rem var(--mono);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 0.3rem;
+}
+.k-roll dd {
+  margin: 0 0 1.8rem;
+  font-size: 1.2rem;
+}
+.k-credits .k-actions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1.2rem;
+  justify-content: center;
+  margin: 0;
+}
+
+/* --- Layout ------------------------------------------------------------------------------ */
+@media (orientation: portrait) {
+  .k-dialogue {
+    top: var(--stage-h);
+    max-height: none;
+    background: rgba(6, 7, 9, 0.96);
+    padding: 1.4rem 1.1rem 1.2rem;
+    border-top: 1px solid var(--rule);
+  }
+  .k-dialogue::before {
+    display: none;
+  }
+  .k-more {
+    right: 1.1rem;
+  }
+  .k-subs {
+    font-size: 0.95rem;
+    bottom: calc(100vh - var(--stage-h) + 4%);
+  }
+  .k-top {
+    top: 0.3rem;
+    right: 0.3rem;
+  }
+  .k-toast {
+    top: 3.4rem;
+  }
+  .k-monitor {
+    font-size: 0.78rem;
+    top: calc(var(--stage-h) * 0.06);
+    padding: 0.8rem;
+  }
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  #ui {
+    font-size: 15px;
+  }
+  .k-dialogue {
+    min-height: 0;
+    padding: 1.5rem clamp(1rem, 5vw, 4rem) 0.6rem;
+    max-height: 62vh;
+  }
+  .k-dialogue::before {
+    top: 0.9rem;
+    left: clamp(1rem, 5vw, 4rem);
+    right: clamp(1rem, 5vw, 4rem);
+  }
+  .k-who {
+    margin-top: 0.1rem;
+  }
+  .k-text {
+    min-height: 2.6em;
+    font-size: 1rem;
+  }
+  .k-more {
+    right: 1rem;
+    bottom: 0.4rem;
+  }
+  .k-choices button {
+    min-height: 44px;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+  }
+  .k-title {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.4rem 2.4rem;
+  }
+  .k-title h1 {
+    font-size: 2.4rem;
+  }
+  .k-title .k-mark {
+    width: 64px;
+  }
+  .k-title .k-sub {
+    display: none;
+  }
+  .k-menu {
+    margin: 0;
+  }
+  .k-monitor {
+    top: 4%;
+    max-height: 60vh;
+    padding: 0.6rem 1rem;
+    line-height: 1.5;
+  }
+}
+.k-reduced *,
+.k-reduced *::before,
+.k-reduced *::after {
+  animation: none !important;
+  transition-duration: 0.01s !important;
+}
+.k-reduced .k-more.k-on {
+  opacity: 1;
+}
