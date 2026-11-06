@@ -61,6 +61,10 @@ VITE_BASE=/your-repo-name/ npm run build
 
 The included workflow builds with `npm ci` and deploys `dist/` to GitHub Pages on every push to `main`.
 
+## Privacy
+
+Your save stays in your browser (local storage). The game has no accounts, no analytics and no tracking, and it loads nothing from other websites.
+
 ---
 
 ## Story (spoilers)
@@ -184,8 +188,8 @@ The build is free. It used no paid services, no paid asset libraries, no AI imag
 
 **Not tested**
 
-- **Browsers and devices:** automated tests ran in Microsoft Edge only, with software rendering. Phone layouts were checked at phone-sized screens in Edge, not on real phones. Firefox, Safari and real Chrome are untested.
-- **Frame rate:** not measured on a real graphics card. Software rendering says nothing useful about it.
+- **Browsers and devices:** automated tests ran in Microsoft Edge only. Phone layouts were checked at phone-sized screens in Edge, not on real phones. Firefox, Safari and real Chrome are untested.
+- **Frame rate:** measured on one laptop graphics card (RTX 3050), well above 60 fps at 1280x720 in every scene. Phones and integrated graphics are unmeasured; the game lowers its own quality if frames run slowly.
 - **Sound:** levels and playback were checked by tools, not by ear.
 - **Length:** the 19 to 23 minutes is an estimate from word counts and fixed timings, for one path. Nobody has timed a real playthrough.
 - **Screen readers:** not tested.
@@ -194,7 +198,8 @@ The build is free. It used no paid services, no paid asset libraries, no AI imag
 
 - **Prologue, flooding shot:** the water jets are blocky spray rather than realistic water.
 - **Prologue, first shot:** the surface ship is plain.
-- **Final eye shot:** very faint lines remain near the whale's mouth seam in close-up.
+- **Final eye shot:** the whale's eye is still a stylised, slightly cartoonish shape in close-up.
+- **Room 1:** the lettering on the ship's hull is faint.
 - **Room 2:** a few floating panels overlap a wall screen and part of the memory wall.
 - **Prologue video quality:** browsers that report a slow connection get the 720p video, even on a large screen. If the video can't load, a short card shows and the game carries on.
 - **Test controls:** adding `?debug=1` to the address turns on test controls that can jump between scenes. If you use them while the prologue is playing, the prologue can keep running over the new scene. Normal play can't reach this.
@@ -206,7 +211,7 @@ The build is free. It used no paid services, no paid asset libraries, no AI imag
 - **A game by Team KALPA:** design, writing, programming, art and sound.
 - **3D models and prologue animation:** scripted in Blender. No external model libraries are used.
 - **Audio:** all music and sound effects are synthesised offline for this project. No samples or recordings are used, so there is no third-party audio licence.
-- **Fonts** (SIL Open Font License 1.1): Newsreader, IBM Plex Mono, Noto Sans Tamil, Noto Sans Devanagari. Installed through Fontsource.
+- **Fonts** (SIL Open Font License 1.1): Newsreader, IBM Plex Mono, Marcellus, Noto Sans Tamil, Noto Sans Devanagari. Installed through Fontsource.
 - **Libraries:**
   - three.js, MIT licence.
   - Howler.js, MIT licence.

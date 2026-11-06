@@ -2,6 +2,7 @@
 import '@fontsource/newsreader/latin-400.css';
 import '@fontsource/newsreader/latin-400-italic.css';
 import '@fontsource/ibm-plex-mono/latin-400.css';
+import '@fontsource/marcellus/latin-400.css';
 import './ui.css';
 import symbolSvg from '../../assets/symbol/symbol.svg?raw';
 import type { Engine, EngineEvents, SceneId, Settings } from '../engine/api';
@@ -10,8 +11,16 @@ const creditsData = import.meta.glob('../data/story.json', { eager: true, import
   string,
   { role: string; name: string }[] | undefined
 >;
+const subData = import.meta.glob('../data/prologue_subs.json', { eager: true, import: 'default' }) as Record<
+  string,
+  { speaker?: string; text: string }[] | undefined
+>;
+/** Cues that are burned into the video (speaker "title") are never repeated as a subtitle. */
+const burnedInCues = new Set(
+  (Object.values(subData)[0] ?? []).filter((s) => s.speaker === 'title').map((s) => s.text),
+);
 
-/** Scene accents from docs/ART_DIRECTION.md. They tint the UI lightly. */
+/** Scene accents from docs/ART_DIRECTION.md. They tint the dialogue rule, hotspots, tracker and menus. */
 const ACCENT: Record<SceneId, string> = {
   prologue: '#e8f3ff',
   hub: '#2fe6c8',
@@ -23,6 +32,21 @@ const ACCENT: Record<SceneId, string> = {
   sub_chamber: '#d8a31f',
   moonpool: '#ffb347',
   ending: '#e8f3ff',
+};
+/** Deep teal-black the scene fades pass through. Real black is kept for the film and the ending. */
+const FADE_TEAL = '#031318';
+
+const ICON = {
+  pause: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 4v12M13 4v12"/></svg>',
+  resume: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 2.5l9 5.5-9 5.5z"/></svg>',
+  quit: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.5 2.5h-4v11h4M9 5l3 3-3 3M12 8H5.5"/></svg>',
+  close: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg>',
+  again: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8a5 5 0 11-1.6-3.7M13 2.5v3h-3"/></svg>',
+  sliders: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/><path d="M5 2.5v3M10 6.5v3M7 10.5v3"/></svg>',
+  sound: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5zM11 5.5a3.5 3.5 0 010 5M12.8 3.5a6 6 0 010 9"/></svg>',
+  reading: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3.5h12M2 7.5h12M2 11.5h7"/></svg>',
+  display: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3h12v8.5H2zM5.5 14h5M8 11.5V14"/></svg>',
+  chevron: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg>',
 };
 
 function el<K extends keyof HTMLElementTagNameMap>(
@@ -37,6 +61,17 @@ function el<K extends keyof HTMLElementTagNameMap>(
   parent?.appendChild(e);
   return e;
 }
+
+/** A self-contained copy of the door symbol (unique ids, so several can share the page). */
+function symbolInstance(prefix: string): string {
+  return symbolSvg
+    .replace(/<title>[\s\S]*?<\/title>/, '')
+    .replace(/id="([^"]+)"/g, `id="${prefix}-$1"`)
+    .replace(/url\(#([^)]+)\)/g, `url(#${prefix}-$1)`)
+    .replace(/href="#([^"]+)"/g, `href="#${prefix}-$1"`);
+}
+const markInner = /<g id="mark">([\s\S]*?)<\/g>/.exec(symbolSvg)?.[1] ?? '';
+const SVG_OPEN = 'xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"';
 
 /** Speaker colours can be dark on a dark panel. Lift anything below a readable luminance. */
 function lift(hex: string): string {
@@ -54,6 +89,82 @@ function lift(hex: string): string {
   return `rgb(${r},${g},${b})`;
 }
 
+/** Marine snow: a few hundred pixels of slow drifting specks on one small canvas. */
+function createSnow(canvas: HTMLCanvasElement, still: () => boolean) {
+  const ctx = canvas.getContext('2d');
+  type P = { x: number; y: number; r: number; vy: number; sw: number; f: number; ph: number; a: number };
+  let parts: P[] = [];
+  let w = 0;
+  let h = 0;
+  let dpr = 1;
+  let raf = 0;
+  let last = 0;
+  let running = false;
+  const rnd = (a: number, b: number) => a + Math.random() * (b - a);
+  const size = () => {
+    w = canvas.clientWidth;
+    h = canvas.clientHeight;
+    if (!w || !h) return;
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    const n = Math.round(Math.min(130, (w * h) / 9500));
+    parts = Array.from({ length: n }, () => {
+      const depth = Math.random();
+      return { x: rnd(0, w), y: rnd(0, h), r: 0.5 + depth * 1.5, vy: 3 + depth * 12, sw: rnd(2, 9), f: rnd(0.2, 0.7), ph: rnd(0, 6.28), a: 0.14 + depth * 0.42 };
+    });
+  };
+  const draw = (t: number, dt: number) => {
+    if (!ctx || !w) return;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    for (const p of parts) {
+      p.y += p.vy * dt;
+      p.x += Math.sin(t * p.f + p.ph) * p.sw * dt;
+      if (p.y > h + 4) {
+        p.y = -4;
+        p.x = rnd(0, w);
+      }
+      ctx.globalAlpha = p.a;
+      ctx.fillStyle = '#cdf2ee';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, 6.2832);
+      ctx.fill();
+    }
+  };
+  const loop = (ms: number) => {
+    if (!running) return;
+    const dt = Math.min(0.1, (ms - last) / 1000);
+    last = ms;
+    draw(ms / 1000, dt);
+    raf = requestAnimationFrame(loop);
+  };
+  const stop = () => {
+    running = false;
+    cancelAnimationFrame(raf);
+  };
+  const start = () => {
+    stop();
+    size();
+    if (still()) {
+      draw(0, 0);
+      return;
+    }
+    running = true;
+    last = performance.now();
+    raf = requestAnimationFrame(loop);
+  };
+  window.addEventListener('resize', () => {
+    if (!running && w) start();
+    else size();
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop();
+    else if (canvas.isConnected && !canvas.closest('[hidden]') && !canvas.closest('.k-out')) start();
+  });
+  return { start, stop };
+}
+
 export function mountUI(engine: Engine): void {
   const host = document.getElementById('ui') ?? el('div', '', document.body);
   host.id = 'ui';
@@ -61,8 +172,39 @@ export function mountUI(engine: Engine): void {
   const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
   if (mq.matches && !engine.getSettings().reducedMotion) engine.setSetting('reducedMotion', true);
   const reduced = () => engine.getSettings().reducedMotion || mq.matches;
+  const lowData = window.matchMedia('(prefers-reduced-data: reduce)').matches;
   const applyMotion = () => host.classList.toggle('k-reduced', reduced());
   applyMotion();
+  const rootStyle = document.documentElement.style;
+  rootStyle.setProperty('--kalpa-fade', FADE_TEAL);
+  const whaleUrl = `${import.meta.env.BASE_URL}ui/whale-silhouette.webp`;
+  const whaleImg = (parent: HTMLElement) => {
+    const img = el('img', 'k-whale', parent);
+    img.alt = '';
+    img.decoding = 'async';
+    img.draggable = false;
+    if (!lowData) img.src = whaleUrl;
+    return img;
+  };
+  const shafts = (parent: HTMLElement) => {
+    const wrap = el('div', 'k-shafts', parent);
+    const defs: [string, string, string, number, number][] = [
+      ['8%', '15vw', '16deg', 17, -3],
+      ['30%', '9vw', '11deg', 23, -11],
+      ['52%', '17vw', '15deg', 19, -7],
+      ['74%', '10vw', '9deg', 26, -15],
+      ['90%', '14vw', '13deg', 21, -5],
+    ];
+    for (const [x, w, r, dur, delay] of defs) {
+      const i = el('i', '', wrap);
+      i.style.setProperty('--x', x);
+      i.style.setProperty('--w', w);
+      i.style.setProperty('--r', r);
+      i.style.setProperty('--dur', `${dur}s`);
+      i.style.setProperty('--delay', `${delay}s`);
+    }
+    return wrap;
+  };
 
   let started = false; // a run is on screen (title dismissed)
   let sceneId: SceneId | null = null;
@@ -73,32 +215,34 @@ export function mountUI(engine: Engine): void {
   live.setAttribute('role', 'log');
   live.setAttribute('aria-live', 'polite');
   const announce = (t: string) => {
-    const p = el('p', '', live, t);
+    el('p', '', live, t);
     while (live.childNodes.length > 6) live.firstChild?.remove();
-    void p;
   };
 
-  // ---- Caption, top-right controls, tracker ----------------------------------------------
+  // ---- Caption (chapter card), top-right controls, tracker ---------------------------------
   const caption = el('div', 'k-caption', host);
+  caption.setAttribute('aria-hidden', 'true');
+  const capTitle = el('b', '', caption);
+  el('div', 'k-hair', caption);
   const top = el('div', 'k-top', host);
   top.hidden = true;
   const tracker = el('div', 'k-tracker', top);
   tracker.setAttribute('role', 'img');
-  tracker.innerHTML = symbolSvg;
-  tracker.querySelector('title')?.remove();
+  tracker.innerHTML = symbolInstance('tr');
   const pauseBtn = el('button', 'k-pausebtn', top);
   pauseBtn.type = 'button';
   pauseBtn.setAttribute('aria-label', 'Pause and settings (Esc)');
-  pauseBtn.innerHTML =
-    '<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 5h14M2 9h14M2 13h14"/></svg>';
+  pauseBtn.innerHTML = ICON.pause;
   const toast = el('div', 'k-toast', host);
   toast.setAttribute('aria-hidden', 'true');
 
+  const pendingFrag = new Set<number>(); // fragments still flying to the tracker
   const paintTracker = (held: number[], pulse?: number) => {
+    const shown = held.filter((i) => !pendingFrag.has(i));
     for (let i = 1; i <= 4; i++) {
-      const g = tracker.querySelector<SVGElement>(`#fragment${i}`);
+      const g = tracker.querySelector<SVGElement>(`[id$="fragment${i}"]`);
       if (!g) continue;
-      g.classList.toggle('k-got', held.includes(i));
+      g.classList.toggle('k-got', shown.includes(i));
       if (pulse === i) {
         g.classList.remove('k-pulse');
         void g.getBoundingClientRect();
@@ -108,6 +252,52 @@ export function mountUI(engine: Engine): void {
     tracker.setAttribute('aria-label', `Door symbol: ${held.length} of 4 fragments`);
   };
   paintTracker([]);
+
+  // ---- Fragment collected: the door symbol rises at centre, then flies to the tracker -------
+  const frag = el('div', 'k-frag', host);
+  frag.setAttribute('aria-hidden', 'true');
+  frag.innerHTML = `<span class="k-glow"></span>${symbolInstance('ov')}`;
+  const fragLabel = el('div', 'k-frag-label', frag);
+  let fragAnim: Animation | null = null;
+  const playFragment = (index: number, total: number, held: number[]) => {
+    fragAnim?.cancel();
+    for (let i = 1; i <= 4; i++) {
+      const g = frag.querySelector<SVGElement>(`[id$="fragment${i}"]`);
+      g?.classList.toggle('k-new', i === index);
+      g?.classList.toggle('k-held', i !== index && held.includes(i));
+    }
+    frag.dataset.q = String(index);
+    fragLabel.textContent = `Fragment ${index} of 4`;
+    frag.style.transform = 'none';
+    const fr = frag.getBoundingClientRect();
+    const tr = tracker.getBoundingClientRect();
+    const canFly = !top.hidden && !tracker.hidden && tr.width > 0 && fr.width > 0;
+    const dx = canFly ? tr.left + tr.width / 2 - (fr.left + fr.width / 2) : 0;
+    const dy = canFly ? tr.top + tr.height / 2 - (fr.top + fr.height / 2) : -40;
+    const s = canFly ? tr.width / fr.width : 0.9;
+    pendingFrag.add(index);
+    const land = () => {
+      pendingFrag.delete(index);
+      paintTracker(engine.getState().fragments, index);
+    };
+    const ease = 'cubic-bezier(0.22, 0.8, 0.24, 1)';
+    const anim = frag.animate(
+      [
+        { opacity: 0, transform: 'scale(0.8)', offset: 0 },
+        { opacity: 1, transform: 'scale(1)', offset: 0.14, easing: ease },
+        { opacity: 1, transform: 'scale(1.05)', offset: 0.6, easing: 'cubic-bezier(0.5, 0, 0.7, 0.4)' },
+        { opacity: 1, transform: `translate(${dx}px, ${dy}px) scale(${s})`, offset: 0.95 },
+        { opacity: 0, transform: `translate(${dx}px, ${dy}px) scale(${s})`, offset: 1 },
+      ],
+      { duration: 3000, fill: 'none' },
+    );
+    fragAnim = anim;
+    anim.finished.then(
+      () => land(),
+      () => land(),
+    );
+    announce(`Fragment ${index} found. ${total} of 4 held.`);
+  };
 
   // ---- Hotspots -----------------------------------------------------------------------------
   const hotspotMap = new Map<string, HTMLButtonElement>();
@@ -131,13 +321,18 @@ export function mountUI(engine: Engine): void {
   const dlg = el('section', 'k-dialogue', host);
   dlg.hidden = true;
   dlg.setAttribute('aria-label', 'Dialogue');
-  const who = el('div', 'k-who', dlg);
+  const dlgIn = el('div', 'k-dlg-in', dlg);
+  const rule = el('div', 'k-rule', dlgIn);
+  rule.setAttribute('aria-hidden', 'true');
+  el('i', '', rule);
+  const who = el('div', 'k-who', dlgIn);
   who.setAttribute('aria-hidden', 'true');
-  const text = el('p', 'k-text', dlg);
+  const text = el('p', 'k-text', dlgIn);
   text.setAttribute('aria-hidden', 'true');
-  const more = el('span', 'k-more', dlg, '▾');
+  const more = el('span', 'k-more', dlgIn);
   more.setAttribute('aria-hidden', 'true');
-  const choiceList = el('ul', 'k-choices', dlg);
+  more.innerHTML = ICON.chevron;
+  const choiceList = el('ul', 'k-choices', dlgIn);
   choiceList.hidden = true;
 
   let full = '';
@@ -264,8 +459,7 @@ export function mountUI(engine: Engine): void {
     announce(`Monitor: ${lines.join('. ')}`);
     if (kind === 'door') {
       const m = el('div', 'k-mark', block);
-      m.innerHTML = symbolSvg;
-      m.querySelector('title')?.remove();
+      m.innerHTML = symbolInstance('mo');
     }
     let delay = 0;
     for (const line of lines) {
@@ -308,62 +502,97 @@ export function mountUI(engine: Engine): void {
   pauseEl.hidden = true;
   pauseEl.setAttribute('role', 'dialog');
   pauseEl.setAttribute('aria-modal', 'true');
-  pauseEl.setAttribute('aria-label', 'Paused, settings');
   const form = el('form', '', pauseEl);
   form.addEventListener('submit', (e) => e.preventDefault());
-  el('h2', '', form, 'Paused');
+  const pauseHead = el('h2', '', form);
+  pauseHead.id = 'k-pause-title';
+  pauseHead.innerHTML = ICON.sliders;
+  pauseHead.append('Paused');
+  pauseEl.setAttribute('aria-labelledby', 'k-pause-title');
   const controls: Record<string, HTMLInputElement | HTMLSelectElement> = {};
-  const field = (key: string, label: string, make: () => HTMLInputElement | HTMLSelectElement) => {
-    const row = el('div', 'k-field', form);
+  const outputs: Record<string, { out: HTMLOutputElement; fmt: (v: number) => string }> = {};
+  const group = (label: string, icon: string) => {
+    const fs = el('fieldset', '', form);
+    const lg = el('legend', '', fs);
+    lg.innerHTML = icon;
+    lg.append(label);
+    return fs;
+  };
+  const field = (parent: HTMLElement, key: string, label: string, kind: 'range' | 'switch' | 'select', opts: { min?: number; max?: number; step?: number; fmt?: (v: number) => string } = {}) => {
+    const row = el('div', 'k-field', parent);
     const l = el('label', '', row, label);
-    const c = make();
+    const wrap = el('div', kind === 'range' ? 'k-ctl' : kind === 'switch' ? 'k-ctl k-end' : 'k-ctl', row);
+    let c: HTMLInputElement | HTMLSelectElement;
+    if (kind === 'range') {
+      const i = document.createElement('input');
+      i.type = 'range';
+      i.min = String(opts.min);
+      i.max = String(opts.max);
+      i.step = String(opts.step);
+      wrap.appendChild(i);
+      const out = el('output', '', wrap);
+      outputs[key] = { out, fmt: opts.fmt ?? String };
+      c = i;
+    } else if (kind === 'switch') {
+      const sw = el('span', 'k-switch', wrap);
+      const i = el('input', '', sw);
+      i.type = 'checkbox';
+      i.setAttribute('role', 'switch');
+      el('span', '', sw);
+      c = i;
+    } else {
+      const s = el('select', '', wrap);
+      for (const [v, t] of [
+        ['high', 'High'],
+        ['low', 'Low (lighter on battery)'],
+      ])
+        s.appendChild(new Option(t, v));
+      c = s;
+    }
+    if (kind === 'select') row.classList.add('k-wide');
     c.id = `k-set-${key}`;
     l.htmlFor = c.id;
-    row.appendChild(c);
     controls[key] = c;
     return c;
   };
-  const range = (min: number, max: number, step: number) => () => {
-    const i = document.createElement('input');
-    i.type = 'range';
-    i.min = String(min);
-    i.max = String(max);
-    i.step = String(step);
-    return i;
+  const pct = (v: number) => `${Math.round(v * 100)}%`;
+  const grpSound = group('Sound', ICON.sound);
+  field(grpSound, 'musicVolume', 'Music', 'range', { min: 0, max: 1, step: 0.05, fmt: pct });
+  field(grpSound, 'sfxVolume', 'Sound effects', 'range', { min: 0, max: 1, step: 0.05, fmt: pct });
+  const grpRead = group('Reading', ICON.reading);
+  field(grpRead, 'textSpeed', 'Text speed', 'range', { min: 0.5, max: 4, step: 0.25, fmt: (v) => `${v}x` });
+  field(grpRead, 'subtitles', 'Subtitles', 'switch');
+  const grpDisp = group('Display', ICON.display);
+  field(grpDisp, 'reducedMotion', 'Reduce motion', 'switch');
+  field(grpDisp, 'quality', 'Graphics quality', 'select');
+  const paintRange = (key: string) => {
+    const c = controls[key];
+    if (!(c instanceof HTMLInputElement) || c.type !== 'range') return;
+    const lo = Number(c.min);
+    const hi = Number(c.max);
+    c.style.setProperty('--fill', `${((Number(c.value) - lo) / (hi - lo)) * 100}%`);
+    const o = outputs[key];
+    if (o) o.out.textContent = o.fmt(Number(c.value));
   };
-  const check = () => {
-    const i = document.createElement('input');
-    i.type = 'checkbox';
-    return i;
-  };
-  field('musicVolume', 'Music', range(0, 1, 0.05));
-  field('sfxVolume', 'Sound effects', range(0, 1, 0.05));
-  field('textSpeed', 'Text speed', range(0.5, 4, 0.25));
-  field('reducedMotion', 'Reduce motion', check);
-  field('subtitles', 'Subtitles', check);
-  field('quality', 'Graphics quality', () => {
-    const s = document.createElement('select');
-    for (const [v, t] of [
-      ['high', 'High'],
-      ['low', 'Low (lighter on battery)'],
-    ])
-      s.appendChild(new Option(t, v));
-    return s;
-  });
   for (const key of Object.keys(controls)) {
     const c = controls[key];
     c.addEventListener('input', () => {
       const v: unknown =
         c instanceof HTMLSelectElement ? c.value : c.type === 'checkbox' ? c.checked : Number(c.value);
       engine.setSetting(key as keyof Settings, v as never);
+      paintRange(key);
       if (key === 'reducedMotion') applyMotion();
     });
   }
   const actions = el('div', 'k-actions', form);
-  const resumeBtn = el('button', 'k-btn', actions, 'Resume');
+  const resumeBtn = el('button', 'k-btn', actions);
   resumeBtn.type = 'button';
-  const quitBtn = el('button', 'k-btn', actions, 'Quit to title');
+  resumeBtn.innerHTML = ICON.resume;
+  resumeBtn.append('Resume');
+  const quitBtn = el('button', 'k-btn', actions);
   quitBtn.type = 'button';
+  quitBtn.innerHTML = ICON.quit;
+  quitBtn.append('Quit to title');
   let returnFocus: HTMLElement | null = null;
   const syncControls = () => {
     const s = engine.getSettings();
@@ -371,6 +600,7 @@ export function mountUI(engine: Engine): void {
       const v = s[k as keyof Settings];
       if (c instanceof HTMLInputElement && c.type === 'checkbox') c.checked = Boolean(v) || (k === 'reducedMotion' && mq.matches);
       else c.value = String(Math.min(Number(v) || 0, 4) || v);
+      paintRange(k);
     }
   };
   const openPause = () => {
@@ -393,28 +623,71 @@ export function mountUI(engine: Engine): void {
   resumeBtn.addEventListener('click', closePause);
   quitBtn.addEventListener('click', () => window.location.reload());
 
-  // ---- Title ---------------------------------------------------------------------------------
+  // ---- Title: a living abyss ---------------------------------------------------------------------
   const title = el('div', 'k-title', host);
-  const titleMark = el('div', 'k-mark', title);
-  titleMark.innerHTML = symbolSvg;
-  titleMark.querySelector('title')?.remove();
+  const abyss = el('div', 'k-abyss', title);
+  abyss.setAttribute('aria-hidden', 'true');
+  shafts(abyss);
+  whaleImg(abyss);
+  const snowCanvas = el('canvas', 'k-snow', abyss);
+  const snow = createSnow(snowCanvas, reduced);
+  const card = el('div', 'k-card', title);
+  const titleMark = el('div', 'k-mark', card);
   titleMark.setAttribute('aria-hidden', 'true');
-  el('h1', '', title, 'KALPA');
-  el('p', 'k-sub', title, 'An underwater story');
-  const menu = el('div', 'k-menu', title);
-  const newBtn = el('button', 'k-btn', menu, 'New game');
+  titleMark.innerHTML = `<svg ${SVG_OPEN}>${markInner}</svg>`;
+  titleMark.querySelectorAll('circle, path').forEach((n, i) => {
+    n.setAttribute('pathLength', '1');
+    (n as SVGElement).style.setProperty('--d', `${i * 0.28}s`);
+  });
+  const h1 = el('h1', '', card);
+  h1.setAttribute('aria-label', 'KALPA');
+  [...'KALPA'].forEach((ch, i) => {
+    const s = el('span', '', h1, ch);
+    s.setAttribute('aria-hidden', 'true');
+    s.style.setProperty('--i', String(i));
+  });
+  el('p', 'k-sub', card, 'An underwater story');
+  const menu = el('div', 'k-menu', card);
+  const saved = engine.hasSave();
+  const newBtn = el('button', 'k-btn', undefined, 'New game');
   newBtn.type = 'button';
-  const contBtn = el('button', 'k-btn', menu, 'Continue');
+  const contBtn = el('button', 'k-btn', undefined, 'Continue');
   contBtn.type = 'button';
-  contBtn.hidden = !engine.hasSave();
+  contBtn.hidden = !saved;
+  // One primary action: Continue when a save exists, otherwise New game.
+  const primary = saved ? contBtn : newBtn;
+  menu.append(primary, saved ? newBtn : contBtn);
+  primary.classList.add('k-primary');
   const row = el('div', 'k-row', menu);
   const setBtn = el('button', 'k-btn', row, 'Settings');
   setBtn.type = 'button';
   const credBtn = el('button', 'k-btn', row, 'Credits');
   credBtn.type = 'button';
+  [...menu.querySelectorAll<HTMLElement>('.k-btn')].forEach((b, j) => b.style.setProperty('--j', String(j)));
 
+  const settleTitle = () => title.classList.remove('k-reveal');
+  const revealTitle = () => {
+    if (reduced()) return;
+    title.classList.add('k-reveal');
+    window.setTimeout(settleTitle, 5600);
+  };
+  // A click, tap or key during the reveal jumps to the end. Nothing is ever blocked.
+  title.addEventListener('pointerdown', settleTitle);
+  window.addEventListener(
+    'keydown',
+    (e) => {
+      if (e.key !== 'Shift' && e.key !== 'Control' && e.key !== 'Alt' && e.key !== 'Meta') settleTitle();
+    },
+    true,
+  );
+  revealTitle();
+  snow.start();
+
+  // ---- Loading: the symbol's ring fills ---------------------------------------------------------
   const loadBar = el('div', 'k-loading', host);
-  const loadFill = el('i', '', loadBar);
+  loadBar.setAttribute('aria-hidden', 'true');
+  const glyph = markInner.replace(/<circle[^>]*\/>/, '');
+  loadBar.innerHTML = `<svg ${SVG_OPEN}><circle class="k-ring-track" cx="100" cy="100" r="90"/><circle class="k-ring-fill" cx="100" cy="100" r="90" pathLength="100"/><g class="k-glyph">${glyph}</g></svg>`;
   const loadTxt = el('span', '', loadBar);
   loadBar.hidden = true;
   const setLoading = (loaded: number, total: number) => {
@@ -423,15 +696,15 @@ export function mountUI(engine: Engine): void {
       return;
     }
     loadBar.hidden = false;
-    const pct = Math.round((loaded / total) * 100);
-    loadFill.style.width = `${pct}%`;
-    loadTxt.textContent = `LOADING ${pct}%`;
+    const p = Math.max(4, Math.round((loaded / total) * 100));
+    loadBar.style.setProperty('--p', String(p));
+    loadTxt.textContent = `Loading ${p}%`;
   };
   const beginRun = (fn: () => unknown) => {
     menu.hidden = true;
     loadBar.hidden = false;
-    loadFill.style.width = '4%';
-    loadTxt.textContent = 'LOADING';
+    loadBar.style.setProperty('--p', '4');
+    loadTxt.textContent = 'Loading';
     started = true;
     fn();
   };
@@ -443,6 +716,10 @@ export function mountUI(engine: Engine): void {
         menu.hidden = false;
         loadBar.hidden = true;
         contBtn.hidden = true;
+        contBtn.classList.remove('k-primary');
+        newBtn.classList.add('k-primary');
+        menu.prepend(newBtn);
+        newBtn.focus();
       }
     });
   });
@@ -452,17 +729,20 @@ export function mountUI(engine: Engine): void {
     openPause();
     started = false;
   });
-  newBtn.focus();
+  primary.focus({ preventScroll: true });
 
   // ---- Credits --------------------------------------------------------------------------------
   const credits = el('div', 'k-credits', host);
   credits.hidden = true;
   credits.setAttribute('role', 'dialog');
   credits.setAttribute('aria-label', 'Credits');
+  const credBack = el('div', '', credits);
+  credBack.setAttribute('aria-hidden', 'true');
+  shafts(credBack);
+  whaleImg(credBack);
   const roll = el('div', 'k-roll', credits);
   const rm = el('div', 'k-mark', roll);
-  rm.innerHTML = symbolSvg;
-  rm.querySelector('title')?.remove();
+  rm.innerHTML = symbolInstance('cr');
   el('h2', '', roll, 'KALPA');
   const dl = el('dl', '', roll);
   const entries = Object.values(creditsData)[0] ?? [];
@@ -471,12 +751,16 @@ export function mountUI(engine: Engine): void {
     el('dd', c.role ? '' : 'k-closing', dl, c.name);
   }
   const credActions = el('div', 'k-actions', credits);
-  const againBtn = el('button', 'k-btn', credActions, 'Play again');
+  const againBtn = el('button', 'k-btn', credActions);
   againBtn.type = 'button';
+  againBtn.innerHTML = ICON.again;
+  againBtn.append('Play again');
   const toTitleBtn = el('button', 'k-btn', credActions, 'Title');
   toTitleBtn.type = 'button';
-  const closeCredBtn = el('button', 'k-btn', credActions, 'Close');
+  const closeCredBtn = el('button', 'k-btn', credActions);
   closeCredBtn.type = 'button';
+  closeCredBtn.innerHTML = ICON.close;
+  closeCredBtn.append('Close');
   let creditsFromTitle = false;
   const openCredits = (fromTitle: boolean) => {
     creditsFromTitle = fromTitle;
@@ -492,11 +776,12 @@ export function mountUI(engine: Engine): void {
     roll.style.animation = '';
     (fromTitle ? closeCredBtn : againBtn).focus();
   };
-  credBtn.addEventListener('click', () => openCredits(true));
-  closeCredBtn.addEventListener('click', () => {
+  const closeCredits = () => {
     credits.hidden = true;
     credBtn.focus();
-  });
+  };
+  credBtn.addEventListener('click', () => openCredits(true));
+  closeCredBtn.addEventListener('click', closeCredits);
   againBtn.addEventListener('click', () => {
     credits.hidden = true;
     black.classList.remove('k-on');
@@ -505,30 +790,41 @@ export function mountUI(engine: Engine): void {
   toTitleBtn.addEventListener('click', () => window.location.reload());
 
   // ---- Engine events --------------------------------------------------------------------------
+  let capTimer = 0;
   engine.on('scene:enter', ({ sceneId: id, title: t }) => {
     sceneId = id;
     started = true;
     title.classList.add('k-out');
-    setTimeout(() => (title.hidden = true), 950);
+    setTimeout(() => {
+      title.hidden = true;
+      snow.stop();
+    }, 950);
     credits.hidden = true;
     black.classList.remove('k-on');
     clearMonitor();
     hideDialogue();
     host.style.setProperty('--accent', ACCENT[id] ?? '#2fe6c8');
+    // The film and the ending keep a true black fade. Every other scene fades through deep teal.
+    if (id === 'prologue' || id === 'ending') rootStyle.setProperty('--kalpa-fade', '#000');
     top.hidden = false;
     dock.hidden = true;
     dockCue.hidden = true;
     tracker.hidden = id === 'prologue' || id === 'ending';
-    caption.textContent = t;
+    // The prologue film carries its own title card, so it gets no chapter card on top.
     caption.classList.remove('k-on');
-    void caption.offsetWidth;
-    caption.classList.add('k-on');
-    setTimeout(() => caption.classList.remove('k-on'), 4200);
+    window.clearTimeout(capTimer);
+    if (id !== 'prologue' && t) {
+      capTitle.textContent = t;
+      void caption.offsetWidth;
+      caption.classList.add('k-on');
+      capTimer = window.setTimeout(() => caption.classList.remove('k-on'), 4500);
+    }
     announce(`Scene: ${t}`);
     paintTracker(engine.getState().fragments);
   });
-  engine.on('scene:exit', () => {
+  engine.on('scene:exit', ({ sceneId: id }) => {
     hideDialogue();
+    if (id !== 'prologue') rootStyle.setProperty('--kalpa-fade', FADE_TEAL);
   });
   engine.on('scene:ready', () => {
     loadBar.hidden = true;
@@ -540,11 +836,12 @@ export function mountUI(engine: Engine): void {
     choices = [];
     choiceList.replaceChildren();
     choiceList.hidden = true;
+    more.hidden = false;
     const sys = l.speakerId === 'system' || l.speakerId === 'log';
     who.textContent = l.speakerName || '';
-    who.style.color = lift(l.color);
+    who.style.color = l.speakerName ? lift(l.color) : '';
     text.classList.toggle('k-mono', sys);
-    text.style.color = '';
+    dlg.scrollTop = 0;
     announce(l.speakerName ? `${l.speakerName}: ${l.text}` : l.text);
     typeLine(l.text);
   });
@@ -553,11 +850,13 @@ export function mountUI(engine: Engine): void {
     choices = list;
     finishTyping();
     more.classList.remove('k-on');
+    more.hidden = true; // the chevron has no job while choices are up, and short screens need the room
     choiceList.replaceChildren();
     choiceList.hidden = false;
     announce(`Choices: ${list.map((c) => `${c.index + 1}. ${c.text}`).join('. ')}`);
-    for (const c of list) {
+    list.forEach((c, n) => {
       const li = el('li', '', choiceList);
+      li.style.setProperty('--n', String(n));
       const b = el('button', '', li);
       b.type = 'button';
       el('kbd', '', b, String(c.index + 1));
@@ -566,7 +865,7 @@ export function mountUI(engine: Engine): void {
         e.stopPropagation();
         choose(c.id);
       });
-    }
+    });
     (choiceList.querySelector('button') as HTMLElement | null)?.focus({ preventScroll: true });
   });
   engine.on('choice:made', () => {
@@ -576,18 +875,25 @@ export function mountUI(engine: Engine): void {
   });
   engine.on('dialogue:end', () => hideDialogue());
   engine.on('fragment:collected', ({ index, total }) => {
-    paintTracker(engine.getState().fragments, index);
-    const msg = `Fragment ${index} found. ${total} of 4 held.`;
-    announce(msg);
-    toast.textContent = msg;
-    toast.classList.add('k-on');
-    setTimeout(() => toast.classList.remove('k-on'), 3200);
+    const held = engine.getState().fragments;
+    if (reduced()) {
+      paintTracker(held, index);
+      const msg = `Fragment ${index} found. ${total} of 4 held.`;
+      announce(msg);
+      toast.textContent = msg;
+      toast.classList.add('k-on');
+      setTimeout(() => toast.classList.remove('k-on'), 3200);
+    } else {
+      pendingFrag.add(index);
+      paintTracker(held);
+      playFragment(index, total, held);
+    }
   });
   engine.on('state:changed', ({ state }) => paintTracker(state.fragments));
   engine.on('hotspots:update', ({ items }) => {
-    const live = new Set(items.map((i) => i.id));
+    const liveIds = new Set(items.map((i) => i.id));
     for (const [id, b] of hotspotMap) {
-      if (!live.has(id)) {
+      if (!liveIds.has(id)) {
         b.remove();
         hotspotMap.delete(id);
       }
@@ -613,6 +919,7 @@ export function mountUI(engine: Engine): void {
       b.style.top = `${it.y}px`;
       b.classList.toggle('k-seen', it.seen);
       b.classList.toggle('k-unseen', !it.seen);
+      b.classList.toggle('k-flip', it.x > window.innerWidth * 0.6);
       if (it.visible) anyVisible = true;
     }
     dockList.replaceChildren();
@@ -650,10 +957,11 @@ export function mountUI(engine: Engine): void {
     loadBar.hidden = true;
   });
   engine.on('video:cue', ({ text: t }) => {
-    const on = Boolean(t) && engine.getSettings().subtitles;
-    subs.hidden = !on;
+    // The opening title is burned into the film; it is announced but not drawn a second time.
+    const drawn = Boolean(t) && !burnedInCues.has(t as string) && engine.getSettings().subtitles;
+    subs.hidden = !drawn;
     subs.replaceChildren();
-    if (on && t) el('span', '', subs, t);
+    if (drawn && t) el('span', '', subs, t);
     if (t) announce(t);
   });
   engine.on('video:end', () => {
@@ -669,6 +977,16 @@ export function mountUI(engine: Engine): void {
   });
 
   // ---- Keyboard -------------------------------------------------------------------------------
+  const trap = (root: HTMLElement, e: KeyboardEvent) => {
+    const f = [...root.querySelectorAll<HTMLElement>('input,select,button')].filter(
+      (n) => !n.closest('[hidden]') && !(n as HTMLButtonElement).disabled && n.getClientRects().length > 0,
+    );
+    if (!f.length) return;
+    const i = f.indexOf(document.activeElement as HTMLElement);
+    const next = e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : i === f.length - 1 ? 0 : i + 1;
+    f[next]?.focus();
+    e.preventDefault();
+  };
   window.addEventListener('keydown', (e) => {
     if (!skip.hidden && !paused && (e.key === 'Enter' || e.key === ' ' || e.key === 's' || e.key === 'S')) {
       engine.skipVideo();
@@ -676,26 +994,19 @@ export function mountUI(engine: Engine): void {
       return;
     }
     if (e.key === 'Escape') {
-      if (!credits.hidden && creditsFromTitle) {
-        credits.hidden = true;
-        credBtn.focus();
-      } else if (paused) {
+      if (!credits.hidden && creditsFromTitle) closeCredits();
+      else if (paused) {
         closePause();
         if (!started) menu.hidden = false;
       } else openPause();
       e.preventDefault();
       return;
     }
-    if (paused || !credits.hidden || !title.hidden && !title.classList.contains('k-out')) {
-      if (paused && e.key === 'Tab') {
-        const f = [...pauseEl.querySelectorAll<HTMLElement>('input,select,button')];
-        const i = f.indexOf(document.activeElement as HTMLElement);
-        const next = e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : i === f.length - 1 ? 0 : i + 1;
-        f[next]?.focus();
-        e.preventDefault();
-      }
+    if (e.key === 'Tab' && (paused || !credits.hidden)) {
+      trap(paused ? pauseEl : credits, e);
       return;
     }
+    if (paused || !credits.hidden || (!title.hidden && !title.classList.contains('k-out'))) return;
     if (/^[1-9]$/.test(e.key) && choices.length) {
       const c = choices.find((x) => x.index + 1 === Number(e.key));
       if (c) {
@@ -711,6 +1022,4 @@ export function mountUI(engine: Engine): void {
       advance();
     }
   });
-  // Pause the engine if the tab is hidden while a run is on.
-  void sceneId;
 }

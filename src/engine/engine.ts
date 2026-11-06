@@ -51,7 +51,7 @@ export function createEngine(
   // Scene-level overlay for fades and the blackout. The prologue's video and the placeholder sit
   // under it, inside the stage, so portrait keeps them in the 16:9 strip.
   const fade = document.createElement('div');
-  fade.style.cssText = 'position:absolute;inset:0;background:#000;opacity:1;pointer-events:none;z-index:2';
+  fade.style.cssText = 'position:absolute;inset:0;background:var(--kalpa-fade,#000);opacity:1;pointer-events:none;z-index:2';
   container.appendChild(fade);
 
   let fast = false;

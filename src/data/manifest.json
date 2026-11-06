@@ -95,13 +95,152 @@
       "camera": "CAM_main",
       "exposure": 1,
       "fog": {
-        "color": "#12040a",
-        "near": 12,
-        "far": 48
+        "color": "#06171b",
+        "near": 16,
+        "far": 50
       },
       "owner": "A3",
       "status": "final",
-      "lightScale": 2.2
+      "lightScale": 2.2,
+      "ambient": {
+        "sky": "#1d4650",
+        "ground": "#3a0d16",
+        "intensity": 1.6
+      },
+      "look": {
+        "background": "#04100f",
+        "emissiveCap": 1.6,
+        "mat": {
+          "hub_wet_black": {
+            "roughness": 0.82,
+            "metalness": 0,
+            "color": "#2e1c22"
+          },
+          "hub_door": {
+            "roughness": 0.55,
+            "metalness": 0.1
+          },
+          "hub_wall5": {
+            "metalness": 0.05
+          },
+          "hub_water": {
+            "roughness": 0.32
+          }
+        },
+        "lights": [
+          {
+            "kind": "spot",
+            "color": "#47e8d0",
+            "intensity": 340,
+            "pos": [
+              -3.2,
+              5.5,
+              -1.5
+            ],
+            "target": [
+              -1,
+              1.2,
+              2.2
+            ],
+            "angle": 0.4,
+            "penumbra": 0.9
+          },
+          {
+            "kind": "spot",
+            "color": "#5fe0cc",
+            "intensity": 260,
+            "pos": [
+              0,
+              7.5,
+              -3
+            ],
+            "target": [
+              0,
+              3.2,
+              -13.5
+            ],
+            "angle": 0.5,
+            "penumbra": 0.95
+          }
+        ],
+        "shadows": {
+          "light": "light_arjun",
+          "near": 1,
+          "far": 30,
+          "map": 1024,
+          "intensity": 0.85
+        },
+        "particles": {
+          "color": "#a8eee0",
+          "count": 80,
+          "size": 0.045,
+          "opacity": 0.5,
+          "box": [
+            28,
+            12,
+            30
+          ],
+          "center": [
+            0,
+            4,
+            -2
+          ],
+          "drift": [
+            0.02,
+            -0.12,
+            0
+          ],
+          "sway": 0.3,
+          "focus": [
+            -1,
+            1.6,
+            1
+          ],
+          "focusRadius": 7,
+          "focusMin": 0.2
+        },
+        "shimmer": [
+          {
+            "mats": [
+              "hub_water"
+            ],
+            "tint": "#2fe6c8",
+            "strength": 0.5,
+            "scale": 1.6,
+            "speed": 1,
+            "plane": "xz"
+          },
+          {
+            "mats": [
+              "hub_wet_black"
+            ],
+            "tint": "#1fb8a0",
+            "strength": 0.011,
+            "scale": 0.5,
+            "speed": 0.8,
+            "plane": "xz"
+          }
+        ],
+        "grade": {
+          "tint": [
+            0.97,
+            1,
+            1.03
+          ],
+          "lift": [
+            0,
+            0.03,
+            0.035
+          ],
+          "contrast": 1.12,
+          "saturation": 1.12,
+          "vignette": 0.5,
+          "grain": 0.03
+        },
+        "lightK": {
+          "light_red": 0.3
+        }
+      }
     },
     "char_sato": {
       "file": "models/char_sato.glb",
@@ -135,14 +274,75 @@
       "camera": "CAM_main",
       "exposure": 1,
       "fog": {
-        "color": "#e3c48f",
-        "near": 40,
-        "far": 140
+        "color": "#d9c08f",
+        "near": 28,
+        "far": 130
       },
       "owner": "A3",
       "status": "final",
       "lightScale": 1,
-      "bloom": 0
+      "bloom": 0,
+      "look": {
+        "shadows": {
+          "light": "sun_key",
+          "box": [
+            -18,
+            -1,
+            -26,
+            18,
+            12,
+            6
+          ],
+          "intensity": 0.8,
+          "radius": 3
+        },
+        "particles": {
+          "color": "#c49a60",
+          "count": 260,
+          "size": 0.045,
+          "opacity": 0.4,
+          "box": [
+            30,
+            9,
+            28
+          ],
+          "center": [
+            0,
+            3.5,
+            -4
+          ],
+          "drift": [
+            0.35,
+            0.02,
+            0.1
+          ],
+          "sway": 0.25,
+          "blend": "normal"
+        },
+        "grade": {
+          "tint": [
+            1.05,
+            1,
+            0.9
+          ],
+          "lift": [
+            0.035,
+            0.016,
+            0
+          ],
+          "contrast": 1.08,
+          "saturation": 0.95,
+          "vignette": 0.36,
+          "grain": 0.03,
+          "haze": 0
+        },
+        "mat": {
+          "r1_ship_name": {
+            "color": "#ffffff",
+            "emissiveFromMap": 3.5
+          }
+        }
+      }
     },
     "char_kesav": {
       "file": "models/char_kesav.glb",
@@ -183,7 +383,60 @@
       "owner": "A3",
       "status": "final",
       "lightScale": 0.35,
-      "bloom": 0
+      "bloom": 0,
+      "look": {
+        "shadows": {
+          "light": "sun_key",
+          "box": [
+            -16,
+            -1,
+            -20,
+            16,
+            12,
+            8
+          ],
+          "intensity": 0.5,
+          "radius": 5
+        },
+        "particles": {
+          "color": "#fff0f6",
+          "count": 140,
+          "size": 0.06,
+          "opacity": 0.6,
+          "box": [
+            24,
+            10,
+            22
+          ],
+          "center": [
+            0,
+            5,
+            -4
+          ],
+          "drift": [
+            0.03,
+            0.05,
+            0
+          ],
+          "sway": 0.35
+        },
+        "grade": {
+          "tint": [
+            1,
+            0.98,
+            1.02
+          ],
+          "lift": [
+            0.03,
+            0.02,
+            0.04
+          ],
+          "contrast": 1,
+          "saturation": 1.05,
+          "vignette": 0.26,
+          "grain": 0.02
+        }
+      }
     },
     "char_ila": {
       "file": "models/char_ila.glb",
@@ -234,8 +487,80 @@
       },
       "owner": "A3",
       "status": "final",
-      "lightScale": 2.2,
-      "bloom": 0.5
+      "lightScale": 2.8,
+      "bloom": 0.5,
+      "look": {
+        "shadows": {
+          "light": "light_lamp",
+          "near": 1,
+          "far": 22,
+          "map": 1024,
+          "intensity": 0.55
+        },
+        "particles": {
+          "color": "#ffb066",
+          "count": 70,
+          "size": 0.035,
+          "opacity": 0.7,
+          "box": [
+            4,
+            6,
+            4
+          ],
+          "center": [
+            1.1,
+            3.2,
+            -5.6
+          ],
+          "drift": [
+            0,
+            0.04,
+            0
+          ],
+          "sway": 0.3
+        },
+        "grade": {
+          "tint": [
+            1.04,
+            1,
+            0.93
+          ],
+          "lift": [
+            0.06,
+            0.03,
+            0.005
+          ],
+          "contrast": 1,
+          "saturation": 1,
+          "vignette": 0.2,
+          "grain": 0.035
+        },
+        "emissiveCap": 99,
+        "mat": {
+          "r3_cone": {
+            "opacity": 0.07,
+            "haze": {
+              "y0": 0.4,
+              "y1": 6.1,
+              "edge": 1.8,
+              "low": 0.12
+            }
+          }
+        },
+        "lights": [
+          {
+            "kind": "point",
+            "color": "#ff9a55",
+            "intensity": 45,
+            "pos": [
+              -1.6,
+              2.8,
+              2.6
+            ],
+            "distance": 9
+          }
+        ]
+      }
     },
     "room4": {
       "file": "models/room4.glb",
@@ -254,16 +579,80 @@
         "niyati"
       ],
       "camera": "CAM_main",
-      "exposure": 1,
+      "exposure": 0.72,
       "fog": {
-        "color": "#e8edf0",
-        "near": 40,
-        "far": 110
+        "color": "#aebfd0",
+        "near": 25,
+        "far": 70
       },
       "owner": "A3",
       "status": "final",
       "lightScale": 1,
-      "bloom": 0
+      "bloom": 0,
+      "ambient": {
+        "sky": "#bcd4ea",
+        "ground": "#1c2a3a",
+        "intensity": 0.3
+      },
+      "look": {
+        "whiteCap": 0.72,
+        "mat": {
+          "r4_floor": {
+            "roughness": 0.35
+          }
+        },
+        "shadows": {
+          "light": "sun_key",
+          "box": [
+            -16,
+            -1,
+            -22,
+            16,
+            14,
+            8
+          ],
+          "intensity": 1,
+          "radius": 4
+        },
+        "particles": {
+          "color": "#e8f4ff",
+          "count": 120,
+          "size": 0.04,
+          "opacity": 0.45,
+          "box": [
+            26,
+            10,
+            26
+          ],
+          "center": [
+            0,
+            5,
+            -6
+          ],
+          "drift": [
+            0.01,
+            0.03,
+            0
+          ],
+          "sway": 0.3
+        },
+        "grade": {
+          "tint": [
+            0.93,
+            0.99,
+            1.08
+          ],
+          "lift": [
+            0,
+            0.02,
+            0.05
+          ],
+          "contrast": 1.2,
+          "saturation": 0.85,
+          "vignette": 0.45,
+          "grain": 0.03
+        }
+      }
     },
     "room5": {
       "file": "models/room5.glb",
@@ -283,12 +672,107 @@
         "sato"
       ],
       "camera": "CAM_main",
-      "exposure": 1,
+      "exposure": 0.75,
       "fog": null,
       "owner": "A3",
       "status": "final",
       "lightScale": 0.65,
-      "bloom": 0
+      "bloom": 0.12,
+      "ambient": {
+        "sky": "#7fa6c8",
+        "ground": "#101c2c",
+        "intensity": 0.25
+      },
+      "look": {
+        "whiteCap": 0.68,
+        "shadows": {
+          "light": "sun_key",
+          "box": [
+            -16,
+            -1,
+            -16,
+            16,
+            14,
+            8
+          ],
+          "intensity": 0.9,
+          "radius": 4
+        },
+        "particles": {
+          "color": "#9fd8ff",
+          "count": 130,
+          "size": 0.07,
+          "opacity": 0.5,
+          "box": [
+            26,
+            12,
+            20
+          ],
+          "center": [
+            0,
+            6,
+            -28
+          ],
+          "drift": [
+            0,
+            -0.05,
+            0.02
+          ],
+          "sway": 0.3
+        },
+        "grade": {
+          "tint": [
+            0.92,
+            1,
+            1.1
+          ],
+          "lift": [
+            0,
+            0.02,
+            0.06
+          ],
+          "contrast": 1.12,
+          "saturation": 1,
+          "vignette": 0.62,
+          "grain": 0.03
+        },
+        "mat": {
+          "sky_room5_water": {
+            "emissive": "#2a78c8",
+            "emissiveIntensity": 0.75
+          },
+          "r5_floor": {
+            "roughness": 0.3
+          },
+          "r5_shaft": {
+            "opacity": 0.05
+          },
+          "r5_lab_sign": {
+            "colorScale": 0.1
+          },
+          "whale_slate": {
+            "color": "#1b2a3b"
+          },
+          "whale_slate_dark": {
+            "color": "#101a26"
+          },
+          "whale_slate_light": {
+            "color": "#2b4056"
+          },
+          "whale_pleat": {
+            "color": "#7a8c9b"
+          },
+          "whale_pleat_dark": {
+            "color": "#4a5c6b"
+          },
+          "whale_mouth": {
+            "color": "#0c141d"
+          },
+          "r5_glass": {
+            "opacity": 0.02
+          }
+        }
+      }
     },
     "sub_chamber": {
       "file": "models/sub_chamber.glb",
@@ -306,14 +790,116 @@
       "camera": "CAM_main",
       "exposure": 1,
       "fog": {
-        "color": "#0d1215",
-        "near": 14,
-        "far": 40
+        "color": "#06222a",
+        "near": 12,
+        "far": 38
       },
       "owner": "A3",
       "status": "final",
       "lightScale": 2,
-      "bloom": 0.2
+      "bloom": 0.2,
+      "ambient": {
+        "sky": "#1d4a52",
+        "ground": "#0a1a1e",
+        "intensity": 0.85
+      },
+      "look": {
+        "emissiveCap": 2.2,
+        "lights": [
+          {
+            "kind": "spot",
+            "color": "#ffcf70",
+            "intensity": 90,
+            "pos": [
+              2.6,
+              4.2,
+              -6.5
+            ],
+            "target": [
+              3.9,
+              1.2,
+              -2.4
+            ],
+            "angle": 0.4,
+            "penumbra": 0.9
+          }
+        ],
+        "shadows": {
+          "light": "light_work_1",
+          "near": 1,
+          "far": 25,
+          "map": 1024,
+          "intensity": 0.85
+        },
+        "particles": {
+          "color": "#9fe8dc",
+          "count": 64,
+          "size": 0.04,
+          "opacity": 0.5,
+          "box": [
+            22,
+            9,
+            22
+          ],
+          "center": [
+            0,
+            4,
+            -5
+          ],
+          "drift": [
+            0,
+            -0.07,
+            0.02
+          ],
+          "sway": 0.3,
+          "focus": [
+            3.5,
+            1.8,
+            -3
+          ],
+          "focusRadius": 6.5,
+          "focusMin": 0.12
+        },
+        "grade": {
+          "tint": [
+            1,
+            1.02,
+            1
+          ],
+          "lift": [
+            0.01,
+            0.065,
+            0.075
+          ],
+          "contrast": 1.12,
+          "saturation": 1.05,
+          "vignette": 0.5,
+          "grain": 0.035
+        },
+        "mat": {
+          "lamp_lens": {
+            "emissive": "#9fcbff",
+            "emissiveIntensity": 1.6,
+            "color": "#6f8fb0"
+          },
+          "sc_lamp": {
+            "emissive": "#9fcbff",
+            "emissiveIntensity": 1.5,
+            "color": "#6f8fb0"
+          },
+          "mp_lamp": {
+            "emissive": "#9fcbff",
+            "emissiveIntensity": 1.5,
+            "color": "#6f8fb0"
+          },
+          "sub_strobe": {
+            "emissive": "#ff9a30",
+            "emissiveIntensity": 1.8,
+            "color": "#ff9a30"
+          }
+        },
+        "background": "#06222a"
+      }
     },
     "moonpool": {
       "file": "models/moonpool.glb",
@@ -332,14 +918,145 @@
       "camera": "CAM_main",
       "exposure": 1,
       "fog": {
-        "color": "#0a1a1f",
-        "near": 16,
-        "far": 55
+        "color": "#06222a",
+        "near": 14,
+        "far": 45
       },
       "owner": "A3",
       "status": "final",
       "lightScale": 2,
-      "bloom": 0.4
+      "bloom": 0.4,
+      "ambient": {
+        "sky": "#1d4a52",
+        "ground": "#0a1a1e",
+        "intensity": 0.85
+      },
+      "look": {
+        "emissiveCap": 2.2,
+        "lights": [
+          {
+            "kind": "spot",
+            "color": "#ffcf70",
+            "intensity": 90,
+            "pos": [
+              -4.5,
+              4,
+              -6
+            ],
+            "target": [
+              -3.4,
+              1,
+              -1.2
+            ],
+            "angle": 0.4,
+            "penumbra": 0.9
+          },
+          {
+            "kind": "spot",
+            "color": "#ffcf70",
+            "intensity": 90,
+            "pos": [
+              4.5,
+              4,
+              -6
+            ],
+            "target": [
+              3.5,
+              1,
+              -1.5
+            ],
+            "angle": 0.4,
+            "penumbra": 0.9
+          }
+        ],
+        "shadows": {
+          "light": "light_pool",
+          "near": 1,
+          "far": 30,
+          "map": 2048,
+          "intensity": 0.85
+        },
+        "particles": {
+          "color": "#9fe8dc",
+          "count": 64,
+          "size": 0.04,
+          "opacity": 0.5,
+          "box": [
+            24,
+            10,
+            20
+          ],
+          "center": [
+            0,
+            3,
+            -6
+          ],
+          "drift": [
+            0,
+            -0.07,
+            0.02
+          ],
+          "sway": 0.3,
+          "focus": [
+            0,
+            1.8,
+            -2
+          ],
+          "focusRadius": 7.5,
+          "focusMin": 0.12
+        },
+        "shimmer": [
+          {
+            "mats": [
+              "mp_water"
+            ],
+            "tint": "#3aa59a",
+            "strength": 0.05,
+            "scale": 0.5,
+            "speed": 1,
+            "plane": "xz"
+          }
+        ],
+        "grade": {
+          "tint": [
+            1,
+            1.02,
+            1
+          ],
+          "lift": [
+            0.01,
+            0.065,
+            0.075
+          ],
+          "contrast": 1.12,
+          "saturation": 1.05,
+          "vignette": 0.5,
+          "grain": 0.035
+        },
+        "mat": {
+          "lamp_lens": {
+            "emissive": "#9fcbff",
+            "emissiveIntensity": 1.6,
+            "color": "#6f8fb0"
+          },
+          "sc_lamp": {
+            "emissive": "#9fcbff",
+            "emissiveIntensity": 1.5,
+            "color": "#6f8fb0"
+          },
+          "mp_lamp": {
+            "emissive": "#9fcbff",
+            "emissiveIntensity": 1.5,
+            "color": "#6f8fb0"
+          },
+          "sub_strobe": {
+            "emissive": "#ff9a30",
+            "emissiveIntensity": 1.8,
+            "color": "#ff9a30"
+          }
+        },
+        "background": "#06222a"
+      }
     },
     "ending": {
       "file": "models/ending.glb",
@@ -350,10 +1067,111 @@
       "characters": [],
       "camera": "CAM_main",
       "exposure": 1,
-      "fog": null,
+      "fog": {
+        "color": "#082640",
+        "near": 8,
+        "far": 55
+      },
       "owner": "A3",
       "status": "final",
-      "lightScale": 1.6
+      "lightScale": 1.6,
+      "look": {
+        "particles": {
+          "color": "#a8dcff",
+          "count": 160,
+          "size": 0.09,
+          "opacity": 0.5,
+          "box": [
+            16,
+            10,
+            22
+          ],
+          "center": [
+            3,
+            5,
+            -12
+          ],
+          "drift": [
+            0,
+            -0.06,
+            0.02
+          ],
+          "sway": 0.3
+        },
+        "shimmer": [
+          {
+            "mats": [
+              "whale_slate",
+              "whale_slate_dark",
+              "whale_slate_light",
+              "whale_pleat",
+              "whale_pleat_dark",
+              "whale_mouth"
+            ],
+            "tint": "#9fe0ff",
+            "strength": 0.16,
+            "scale": 1.1,
+            "speed": 0.6,
+            "plane": "xy",
+            "soft": true
+          }
+        ],
+        "grade": {
+          "tint": [
+            0.88,
+            1,
+            1.12
+          ],
+          "lift": [
+            0,
+            0.03,
+            0.07
+          ],
+          "contrast": 1.15,
+          "saturation": 1,
+          "vignette": 0.6,
+          "grain": 0.04,
+          "focus": [
+            0.26,
+            0.65
+          ],
+          "focusDark": 0.45
+        },
+        "mat": {
+          "whale_lid_lid": {
+            "color": "#33506a",
+            "roughness": 0.9
+          },
+          "whale_lid_lid.001": {
+            "color": "#33506a",
+            "roughness": 0.9
+          },
+          "whale_lid_lid.002": {
+            "color": "#33506a",
+            "roughness": 0.9
+          },
+          "whale_lid_lid.003": {
+            "color": "#33506a",
+            "roughness": 0.9
+          },
+          "whale_lid_lid_edge": {
+            "color": "#2b445b",
+            "roughness": 0.95
+          },
+          "whale_lid_lid_edge.001": {
+            "color": "#2b445b",
+            "roughness": 0.95
+          },
+          "whale_lid_lid_edge.002": {
+            "color": "#2b445b",
+            "roughness": 0.95
+          },
+          "whale_lid_lid_edge.003": {
+            "color": "#2b445b",
+            "roughness": 0.95
+          }
+        }
+      }
     }
   },
   "video": {

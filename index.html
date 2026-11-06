@@ -3,17 +3,39 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="KALPA, a narrative game set in an underwater laboratory in the Andaman Sea." />
-    <link rel="icon" href="data:," />
+    <meta name="theme-color" content="#041217" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      name="description"
+      content="KALPA is a narrative game set in an underwater laboratory in the Andaman Sea. Four doors lead to four futures, and you choose the order. Free, in your browser."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="KALPA" />
+    <meta
+      property="og:description"
+      content="A narrative game set in an underwater laboratory in the Andaman Sea. Four doors, four futures, one whale. Free, in your browser."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="KALPA" />
+    <meta
+      name="twitter:description"
+      content="A narrative game set in an underwater laboratory in the Andaman Sea. Four doors, four futures, one whale."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <title>KALPA</title>
     <style>
       html,
       body {
         margin: 0;
         height: 100%;
-        background: #000;
+        background: #020809;
         overflow: hidden;
+        overscroll-behavior: none;
+        touch-action: manipulation;
       }
       #stage {
         position: fixed;
@@ -45,11 +67,157 @@
         object-fit: contain;
         background: #000;
       }
+
+      /* First paint, before any script: the door symbol's ring and a quiet status line. */
+      #boot,
+      #fatal,
+      #nojs {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        align-content: center;
+        gap: 1.1rem;
+        padding: 1.5rem;
+        text-align: center;
+        color: #f0e8d4;
+        font-family: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+        background: radial-gradient(ellipse 90% 45% at 50% -8%, rgba(140, 236, 226, 0.22), transparent 70%),
+          linear-gradient(180deg, #0a2f38 0%, #041419 55%, #020809 100%);
+      }
+      #boot {
+        z-index: 12;
+        transition: opacity 0.6s ease;
+      }
+      #boot.is-done {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #boot svg {
+        width: 84px;
+        height: 84px;
+        fill: none;
+        stroke: #4fd6c2;
+        stroke-width: 5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        overflow: visible;
+      }
+      #boot svg .ring {
+        stroke-dasharray: 100;
+        stroke-dashoffset: 100;
+        transform: rotate(-90deg);
+        transform-origin: 100px 100px;
+        animation: boot-ring 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+      #boot svg .glyph {
+        opacity: 0.5;
+      }
+      @keyframes boot-ring {
+        0% {
+          stroke-dashoffset: 100;
+        }
+        70%,
+        100% {
+          stroke-dashoffset: 0;
+        }
+      }
+      #boot .word {
+        margin: 0;
+        font: 400 1.9rem/1 'Marcellus', 'Iowan Old Style', Georgia, serif;
+        letter-spacing: 0.5em;
+        padding-left: 0.5em;
+      }
+      #boot .status,
+      #boot .status * {
+        margin: 0;
+        font: 0.8125rem 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #bdb8a6;
+      }
+      #fatal,
+      #nojs {
+        z-index: 30;
+        gap: 0;
+      }
+      .fatal-card {
+        max-width: 30rem;
+        padding: 2rem 1.75rem;
+        background: rgba(5, 18, 23, 0.92);
+        border: 1px solid rgba(240, 232, 212, 0.3);
+      }
+      #fatal h1,
+      #nojs h1 {
+        margin: 0 0 0.9rem;
+        font: 400 1.6rem/1.25 'Marcellus', 'Iowan Old Style', Georgia, serif;
+        letter-spacing: 0.08em;
+      }
+      #fatal p,
+      #nojs p {
+        margin: 0 0 1.5rem;
+        font-size: 1.1875rem;
+        line-height: 1.5;
+        color: #e4dcc8;
+      }
+      #nojs p {
+        margin: 0;
+      }
+      #fatal button {
+        min-width: 44px;
+        min-height: 48px;
+        padding: 0.6rem 2rem;
+        font: 400 1rem 'Marcellus', Georgia, serif;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: #f0e8d4;
+        background: rgba(79, 214, 194, 0.14);
+        border: 1px solid #4fd6c2;
+        cursor: pointer;
+        touch-action: manipulation;
+      }
+      #fatal button:hover,
+      #fatal button:focus-visible {
+        background: rgba(79, 214, 194, 0.28);
+        outline: 2px solid #f0e8d4;
+        outline-offset: 3px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #boot svg .ring {
+          animation: none;
+          stroke-dashoffset: 0;
+        }
+        #boot {
+          transition: none;
+        }
+      }
     </style>
+    <noscript><style>#boot { display: none; }</style></noscript>
   </head>
   <body>
     <div id="stage"></div>
     <div id="ui"></div>
+    <div id="boot" role="status">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="100" cy="100" r="90" opacity="0.22" />
+        <circle class="ring" cx="100" cy="100" r="90" pathLength="100" />
+        <g class="glyph">
+          <path d="M18 100 C50 50 150 50 182 100 C150 150 50 150 18 100 Z" />
+          <path d="M80 136 V88 C80 64 120 64 120 88 V136 Z" />
+          <path d="M100 10 V64 M100 136 V190" />
+        </g>
+      </svg>
+      <p class="word">KALPA</p>
+      <p class="status">Loading</p>
+    </div>
+    <noscript>
+      <div id="nojs">
+        <div class="fatal-card">
+          <h1>KALPA needs JavaScript</h1>
+          <p>This game runs in the browser and cannot start while JavaScript is turned off. Turn it on for this site, then reload the page.</p>
+        </div>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -27,6 +27,8 @@ jobs:
       - run: npm run build
         env:
           VITE_BASE: /kalpa/
+          # Absolute address for canonical and og:image. Built here so the repository never holds an account name.
+          VITE_SITE_URL: https://${{ github.repository_owner }}.github.io/kalpa/
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist
