@@ -174,15 +174,15 @@
         "ila"
       ],
       "camera": "CAM_main",
-      "exposure": 1,
+      "exposure": 0.68,
       "fog": {
-        "color": "#f2e4ee",
-        "near": 35,
-        "far": 90
+        "color": "#6e6078",
+        "near": 30,
+        "far": 95
       },
       "owner": "A3",
       "status": "final",
-      "lightScale": 1,
+      "lightScale": 0.35,
       "bloom": 0
     },
     "char_ila": {
@@ -344,7 +344,7 @@
     "ending": {
       "file": "models/ending.glb",
       "purpose": "The final shot: the dark lab, the tank glowing, a door on the dead monitor, and the whale's eye (CAM_eye)",
-      "bytes": 31512,
+      "bytes": 31532,
       "tris": 1118,
       "hotspots": [],
       "characters": [],
@@ -353,8 +353,21 @@
       "fog": null,
       "owner": "A3",
       "status": "final",
-      "lightScale": 1.6,
-      "eyeShift": 0.45
+      "lightScale": 1.6
+    }
+  },
+  "video": {
+    "prologue": {
+      "720": {
+        "mp4": "video/prologue_720.mp4",
+        "webm": "video/prologue_720.webm"
+      },
+      "1080": {
+        "mp4": "video/prologue_1080.mp4",
+        "webm": "video/prologue_1080.webm"
+      },
+      "durationS": 82,
+      "vtt": "video/prologue.vtt"
     }
   },
   "audio": {

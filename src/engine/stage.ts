@@ -24,6 +24,8 @@ import {
   PerspectiveCamera,
   Scene,
   SRGBColorSpace,
+  SphereGeometry,
+  TorusGeometry,
   Vector2,
   Vector3,
   WebGLRenderTarget,
@@ -420,29 +422,106 @@ export class Stage {
 
   // --- Final shot ---
 
+  /**
+   * Close-up on the eye: nothing may sit between the lens and the eyeball. Hide the tank glass and
+   * light shafts, and take the hard mouth line out of the framing.
+   */
+  private clearEyeShot(): void {
+    if (!this.root) return;
+    this.root.traverse((o) => {
+      const mesh = o as Mesh;
+      if (!mesh.isMesh) return;
+      const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+      const names = [mesh.name, ...mats.map((m) => m.name)];
+      if (names.some((n) => /glass|pane|shaft/i.test(n))) mesh.visible = false;
+      // The mouth line is a hard dark bar in close-up: repaint it as the skin around it.
+      const skin = mats.find((m) => m.name === 'whale_slate') as MeshStandardMaterial | undefined;
+      for (const m of mats) {
+        if (m.name !== 'whale_mouth' || !(m as MeshStandardMaterial).isMeshStandardMaterial) continue;
+        const std = m as MeshStandardMaterial;
+        const ref = skin ?? this.findMaterial('whale_slate');
+        if (ref) {
+          std.color.copy(ref.color);
+          std.roughness = ref.roughness;
+          std.metalness = ref.metalness;
+          std.map = ref.map;
+        }
+        std.emissive.set(0, 0, 0);
+        std.needsUpdate = true;
+      }
+    });
+    this.addEyeSocket();
+  }
+
+  /**
+   * An eyelid fold in the whale's own skin, so the eyeball reads as set into the face. Built from
+   * primitives and added to the scene group, so it is disposed with the scene and exists only in this shot.
+   */
+  private addEyeSocket(): void {
+    const root = this.root;
+    const anchor = root?.getObjectByName('whale_eyelid');
+    if (!root || !anchor || root.getObjectByName('eye_socket')) return;
+    const skin = this.findMaterial('whale_slate');
+    if (!skin) return;
+    const centre = anchor.getWorldPosition(new Vector3());
+
+    const fold = skin.clone();
+    fold.name = 'eye_socket_fold';
+    fold.color.multiplyScalar(0.78);
+    fold.roughness = Math.min(1, skin.roughness + 0.1);
+
+    const group = new Group();
+    group.name = 'eye_socket';
+    group.position.copy(centre);
+
+    // Almond fold: heavier upper lid, lighter lower lid, both overlapping the rim of the ball.
+    const R = 0.2;
+    const lids = new Group();
+    const ring = new Mesh(new TorusGeometry(R, 0.045, 12, 64), fold);
+    ring.name = 'eye_socket_ring';
+    lids.add(ring);
+    // Heavier upper lid: a thicker arc over the top, its ends rounded off so it blends into the ring.
+    const a0 = Math.PI * 0.08;
+    const a1 = Math.PI * 0.92;
+    const upper = new Mesh(new TorusGeometry(R, 0.08, 14, 48, a1 - a0), fold);
+    upper.rotation.z = a0;
+    upper.name = 'eye_socket_upper';
+    lids.add(upper);
+    for (const a of [a0, a1]) {
+      const cap = new Mesh(new SphereGeometry(0.08, 14, 10), fold);
+      cap.position.set(Math.cos(a) * R, Math.sin(a) * R, 0);
+      cap.name = 'eye_socket_cap';
+      lids.add(cap);
+    }
+    lids.scale.set(1.25, 0.85, 0.8);
+    lids.position.z = 0.08;
+    group.add(lids);
+
+    root.add(group);
+  }
+
+  private findMaterial(name: string): MeshStandardMaterial | null {
+    let found: MeshStandardMaterial | null = null;
+    this.root?.traverse((o) => {
+      const mesh = o as Mesh;
+      if (found || !mesh.isMesh) return;
+      const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+      found = (mats.find((m) => m.name === name) as MeshStandardMaterial | undefined) ?? null;
+    });
+    return found;
+  }
+
   /** Switch to the eye camera and open the eye. Resolves with the time it takes, in ms. */
   startFinalShot(): number {
     if (this.eyeCam) {
       this.eyeCam.updateWorldMatrix(true, false);
       this.eyeCam.getWorldPosition(this.basePos);
       this.eyeCam.getWorldQuaternion(this.camera.quaternion);
-      // Centre the eye in frame: the whale is re-exported separately, so its eye can drift from where
-      // CAM_eye was aimed. Slide the camera sideways in its own plane, keeping distance and lens.
-      const lid = this.root?.getObjectByName('whale_eyelid');
-      if (lid) {
-        lid.updateWorldMatrix(true, false);
-        const eye = lid.getWorldPosition(new Vector3());
-        const fwd = new Vector3(0, 0, -1).applyQuaternion(this.camera.quaternion);
-        const rel = eye.clone().sub(this.basePos);
-        this.basePos.add(rel.sub(fwd.multiplyScalar(rel.dot(fwd))));
-        // A sideways nudge (manifest eyeShift, metres) slides the tank's frame post off the eye by parallax.
-        const right = new Vector3(1, 0, 0).applyQuaternion(this.camera.quaternion);
-        this.basePos.addScaledVector(right, this.manifest.models.ending?.eyeShift ?? 0);
-      }
       const aspect = this.eyeCam.aspect > 0 && this.eyeCam.aspect !== 1 ? this.eyeCam.aspect : AUTHORED_ASPECT;
       const tanH = Math.tan(MathUtils.degToRad(this.eyeCam.fov) / 2) * aspect;
       this.hFov = MathUtils.radToDeg(2 * Math.atan(tanH));
       this.applyFov();
+      this.clearEyeShot();
     }
     if (this.eyeAction) {
       this.eyeAction.paused = false;

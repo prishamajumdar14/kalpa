@@ -25,10 +25,12 @@
         overflow: hidden;
         background: #000;
       }
-      /* Portrait keeps the 16:9 framing at the top. The UI fills the space beneath. */
+      /* Portrait: the stage takes the upper part of the screen (the horizontal framing is kept,
+         so it shows more above and below). The dialogue panel sits directly beneath it. */
       @media (orientation: portrait) {
         #stage {
-          height: 56.25vw;
+          height: 46vh;
+          height: 46dvh;
         }
       }
       #stage canvas,

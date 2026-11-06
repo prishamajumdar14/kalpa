@@ -112,6 +112,20 @@ export function mountUI(engine: Engine): void {
   // ---- Hotspots -----------------------------------------------------------------------------
   const hotspotMap = new Map<string, HTMLButtonElement>();
   const hotspotLayer = el('div', '', host);
+  // Portrait phones: the strip under the stage lists what can be examined, as large tap targets.
+  const dock = el('nav', 'k-dock', host);
+  dock.setAttribute('aria-label', 'Things to examine');
+  const dockList = el('ul', '', dock);
+  // Scroll cue: when the list is taller than its panel (short portrait screens), say so.
+  const dockCue = el('div', 'k-dockcue', host, 'More below');
+  dockCue.setAttribute('aria-hidden', 'true');
+  dockCue.hidden = true;
+  const updateDockCue = () => {
+    const more = !dock.hidden && dock.scrollHeight - dock.clientHeight - dock.scrollTop > 6;
+    dockCue.hidden = !more;
+  };
+  dock.addEventListener('scroll', updateDockCue, { passive: true });
+  window.addEventListener('resize', updateDockCue);
 
   // ---- Dialogue -------------------------------------------------------------------------------
   const dlg = el('section', 'k-dialogue', host);
@@ -245,6 +259,7 @@ export function mountUI(engine: Engine): void {
     monitor.classList.remove('k-blank');
     monitorAt = performance.now();
     monitorKind = kind;
+    monitor.dataset.kind = kind;
     const block = el('div', '', monitor);
     announce(`Monitor: ${lines.join('. ')}`);
     if (kind === 'door') {
@@ -452,8 +467,8 @@ export function mountUI(engine: Engine): void {
   const dl = el('dl', '', roll);
   const entries = Object.values(creditsData)[0] ?? [];
   for (const c of entries) {
-    el('dt', '', dl, c.role);
-    el('dd', '', dl, c.name);
+    if (c.role) el('dt', '', dl, c.role);
+    el('dd', c.role ? '' : 'k-closing', dl, c.name);
   }
   const credActions = el('div', 'k-actions', credits);
   const againBtn = el('button', 'k-btn', credActions, 'Play again');
@@ -501,6 +516,8 @@ export function mountUI(engine: Engine): void {
     hideDialogue();
     host.style.setProperty('--accent', ACCENT[id] ?? '#2fe6c8');
     top.hidden = false;
+    dock.hidden = true;
+    dockCue.hidden = true;
     tracker.hidden = id === 'prologue' || id === 'ending';
     caption.textContent = t;
     caption.classList.remove('k-on');
@@ -597,6 +614,24 @@ export function mountUI(engine: Engine): void {
       b.classList.toggle('k-seen', it.seen);
       b.classList.toggle('k-unseen', !it.seen);
       if (it.visible) anyVisible = true;
+    }
+    dockList.replaceChildren();
+    for (const it of items) {
+      if (!it.visible) continue;
+      const li = el('li', '', dockList);
+      const bt = el('button', it.seen ? 'k-seen' : '', li, it.label);
+      bt.type = 'button';
+      bt.addEventListener('click', () => engine.clickHotspot(it.id));
+    }
+    dock.hidden = !dockList.childNodes.length;
+    requestAnimationFrame(updateDockCue);
+    // Cockpit: once one power switch has been tried, quietly say the other can be tried too.
+    if (sceneId === 'prologue') {
+      const vis = items.filter((i) => i.visible);
+      const hint = vis.length > 1 && vis.some((i) => i.seen) && vis.some((i) => !i.seen);
+      for (const it of vis) hotspotMap.get(it.id)?.classList.toggle('k-hint', hint && !it.seen);
+      const dbtn = dockList.querySelectorAll('button');
+      vis.forEach((it, n) => dbtn[n]?.classList.toggle('k-hint', hint && !it.seen));
     }
     // Exploring again: put away a monitor that is only there to be read.
     if (

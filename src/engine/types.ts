@@ -102,8 +102,6 @@ export interface ModelEntry {
   fog?: { color: string; near: number; far: number } | null;
   /** Engine tuning (tools/scene_tuning.json): multiplier on converted light units, default 1. */
   lightScale?: number;
-  /** Engine tuning: CAM_eye sideways nudge in metres. */
-  eyeShift?: number;
   /** Engine tuning: bloom strength multiplier, default 1. */
   bloom?: number;
   /** Engine tuning: extra multiplier on sun lights only. */

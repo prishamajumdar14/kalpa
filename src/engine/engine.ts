@@ -121,12 +121,29 @@ export function createEngine(
     }
   };
 
+  // Skip pressed in the short window before the ProloguePlayer is created (B8).
+  let prologueStarting = false;
+  let prologueCanSkip = false;
+  let skipRequested = false;
+
   const host: Host = {
     loadScene: (sceneId, ids, onProgress) => stage.load(sceneId, ids, onProgress),
 
     async playPrologue(canSkip, onCue) {
       stage.setVideoActive(true);
+      prologueStarting = true;
+      prologueCanSkip = canSkip;
+      skipRequested = false;
       await setFade(0);
+      prologueStarting = false;
+      if (skipRequested) {
+        // Skip was pressed before the player existed: honour it, never start the video.
+        skipRequested = false;
+        fade.style.transition = 'none';
+        fade.style.opacity = '1';
+        stage.setVideoActive(false);
+        return;
+      }
       prologue = new ProloguePlayer({
         container,
         manifest,
@@ -146,7 +163,10 @@ export function createEngine(
       stage.setVideoActive(false);
     },
 
-    skipPrologue: () => prologue?.skip(),
+    skipPrologue: () => {
+      if (prologue) prologue.skip();
+      else if (prologueStarting && prologueCanSkip) skipRequested = true;
+    },
     prologueIsPlaceholder: () => !manifest.video?.prologue?.['1080'] && !manifest.video?.prologue?.['720'],
 
     async blackout() {

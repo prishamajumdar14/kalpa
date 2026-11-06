@@ -46,7 +46,7 @@
       "room4": "the quiet world"
     },
     "roomListJoiner": ", then ",
-    "prologueNote": "Cinematic coming soon",
+    "prologueNote": "The film could not load. The story continues.",
     "choiceLog": {
       "room1.trust": "gave his water to the children",
       "room1.control": "kept his water for the road",
@@ -3977,28 +3977,32 @@
   },
   "credits": [
     {
-      "role": "Story and design",
-      "name": "Project KALPA team"
+      "role": "A game by",
+      "name": "Team KALPA"
     },
     {
-      "role": "Narrative",
-      "name": "A1, Narrative Designer"
+      "role": "Design, writing, programming, art and sound",
+      "name": "Team KALPA"
     },
     {
-      "role": "Engine",
-      "name": "Project KALPA team"
+      "role": "Original music and sound design",
+      "name": "Synthesised for this game"
     },
     {
-      "role": "3D art and prologue animation",
-      "name": "Made in Blender"
+      "role": "Tools and technology",
+      "name": "Blender, three.js, Howler"
     },
     {
-      "role": "Music and sound",
-      "name": "Synthesised offline, plus CC0 sources listed in CREDITS.md"
+      "role": "Typefaces",
+      "name": "Newsreader, IBM Plex Mono, Noto Sans Tamil and Noto Sans Devanagari, under the SIL Open Font License"
     },
     {
       "role": "Voiced by",
       "name": "The reader, in their head"
+    },
+    {
+      "role": "",
+      "name": "Thank you for playing"
     }
   ]
 }

@@ -76,7 +76,7 @@
   pointer-events: auto;
   text-align: center;
   padding: 1rem;
-  transition: opacity 0.9s;
+  transition: opacity 0.6s;
 }
 .k-title.k-out {
   opacity: 0;
@@ -156,16 +156,21 @@
   position: absolute;
   left: 1.2rem;
   top: 1rem;
-  font: 0.7rem var(--mono);
-  letter-spacing: 0.22em;
+  font: 600 0.95rem var(--mono);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--ink);
-  text-shadow: 0 1px 6px #000;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+  padding: 0.55rem 2.4rem 0.55rem 0.9rem;
+  margin: -0.55rem 0 0 -0.9rem;
+  background: linear-gradient(to right, rgba(4, 5, 7, 0.9), rgba(4, 5, 7, 0.78) 70%, rgba(4, 5, 7, 0));
+  max-width: calc(100% - 9rem);
   opacity: 0;
-  transition: opacity 1.2s;
+  transition: opacity 0.6s;
 }
 .k-caption.k-on {
-  opacity: 0.85;
+  opacity: 1;
+  transition: opacity 0.3s;
 }
 .k-top {
   position: absolute;
@@ -300,8 +305,28 @@
   transition: opacity 0.2s;
 }
 .k-hotspot:hover b,
-.k-hotspot:focus-visible b {
+.k-hotspot:focus-visible b,
+.k-hotspot.k-hint b {
   opacity: 1;
+}
+.k-hotspot.k-hint i {
+  width: 16px;
+  height: 16px;
+  border-color: var(--accent);
+}
+.k-hotspot.k-hint b::after {
+  content: ' (not tried yet)';
+  color: var(--accent);
+}
+.k-dock button.k-hint::after {
+  content: ' (not tried yet)';
+  font: 0.75rem var(--mono);
+  color: var(--accent);
+}
+@media (orientation: portrait) {
+  .k-hotspot.k-hint b::after {
+    content: '';
+  }
 }
 @keyframes k-ring {
   0% {
@@ -320,7 +345,7 @@
   right: 0;
   bottom: 0;
   pointer-events: auto;
-  background: linear-gradient(to top, var(--panel) 78%, rgba(6, 7, 9, 0));
+  background: linear-gradient(to top, rgba(6, 7, 9, 0.96) 85%, rgba(6, 7, 9, 0));
   padding: 2.2rem clamp(1rem, 8vw, 9rem) 1.3rem;
   min-height: 9.5rem;
   max-height: 55vh;
@@ -338,7 +363,7 @@
   opacity: 0.8;
 }
 .k-who {
-  font: 600 0.74rem var(--mono);
+  font: 600 clamp(0.78rem, 0.6rem + 0.3vw, 0.95rem) var(--mono);
   letter-spacing: 0.24em;
   text-transform: uppercase;
   margin: 0.5rem 0 0.35rem;
@@ -348,7 +373,7 @@
   margin: 0;
   max-width: 46em;
   line-height: 1.5;
-  font-size: 1.12rem;
+  font-size: clamp(1.1rem, 0.6rem + 1vw, 1.8rem);
   min-height: 3em;
 }
 .k-text.k-mono {
@@ -388,17 +413,17 @@
   text-align: left;
   min-height: 44px;
   padding: 0.55em 0.9em;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(3, 4, 6, 0.93);
   border: 0;
   border-left: 2px solid var(--rule);
   line-height: 1.35;
-  font-size: 1.02rem;
+  font-size: clamp(1.02rem, 0.55rem + 0.9vw, 1.55rem);
   transition: border-color 0.15s, background 0.15s;
 }
 .k-choices button:hover,
 .k-choices button:focus-visible {
   border-left-color: var(--accent);
-  background: rgba(255, 255, 255, 0.09);
+  background: rgba(30, 33, 38, 0.92);
 }
 .k-choices kbd {
   font: 0.75rem var(--mono);
@@ -495,6 +520,25 @@
   display: block;
   stroke-width: 4;
 }
+/* The door symbol on the lab monitor: a bare glowing mark, no panel, set to the right of the
+   whale's eye (the eye sits in the left half of the final shot at every aspect ratio). */
+.k-monitor[data-kind='door'] {
+  left: auto;
+  right: 7%;
+  top: calc(var(--stage-h) * 0.3);
+  transform: none;
+  width: clamp(84px, 13vw, 150px);
+  max-height: none;
+  padding: 0;
+  overflow: visible;
+  background: none;
+  border: 0;
+}
+.k-monitor[data-kind='door'] .k-mark {
+  width: 100%;
+  margin: 0;
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 14px color-mix(in srgb, var(--mon, #ffb347) 60%, transparent));
+}
 .k-black {
   position: absolute;
   inset: 0;
@@ -511,11 +555,15 @@
 .k-pause {
   position: absolute;
   inset: 0;
-  background: rgba(3, 4, 5, 0.9);
+  background: rgba(3, 4, 5, 0.97);
   display: grid;
   place-items: center;
   overflow-y: auto;
   pointer-events: auto;
+  z-index: 20;
+}
+.k-credits {
+  z-index: 15;
 }
 .k-pause form {
   width: min(30rem, 100%);
@@ -586,21 +634,26 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 100%;
+  top: 0;
   padding: 0 1rem 40vh;
-  animation: k-roll 52s linear forwards;
+  transform: translateY(14vh);
+  animation: k-roll 44s linear forwards;
 }
 .k-credits.k-static {
   overflow-y: auto;
 }
 .k-credits.k-static .k-roll {
   position: static;
+  transform: none;
   animation: none;
   padding: 18vh 1rem 30vh;
 }
 @keyframes k-roll {
+  from {
+    transform: translateY(14vh);
+  }
   to {
-    transform: translateY(calc(-100% - 100vh));
+    transform: translateY(calc(-100% + 62vh));
   }
 }
 .k-roll .k-mark {
@@ -634,17 +687,92 @@
   margin: 0 0 1.8rem;
   font-size: 1.2rem;
 }
+.k-roll dd.k-closing {
+  margin-top: 3.5rem;
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+}
 .k-credits .k-actions {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 1.2rem;
+  bottom: 0;
   justify-content: center;
   margin: 0;
+  padding: 3.5rem 1rem 1.2rem;
+  background: linear-gradient(to top, #000 62%, rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+
+/* --- Dock (portrait only) ---------------------------------------------------------------- */
+.k-dock {
+  display: none;
+}
+.k-dock ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.k-dock button {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(236, 235, 230, 0.12);
+  padding: 0.5em 0.2em 0.5em 0.9em;
+  border-left: 2px solid var(--accent);
+  font: 0.85rem var(--mono);
+  letter-spacing: 0.08em;
+}
+.k-dock button.k-seen {
+  border-left-color: var(--rule);
+  color: var(--ink-dim);
+}
+.k-dock button:focus-visible,
+.k-dock button:active {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.k-dockcue {
+  display: none;
 }
 
 /* --- Layout ------------------------------------------------------------------------------ */
 @media (orientation: portrait) {
+  .k-dockcue {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3.2rem;
+    padding-top: 1.6rem;
+    text-align: center;
+    font: 0.7rem var(--mono);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: linear-gradient(to top, rgba(6, 7, 9, 0.98) 35%, rgba(6, 7, 9, 0));
+    pointer-events: none;
+  }
+  .k-dockcue::before {
+    content: '▾  ';
+  }
+  .k-dock {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--stage-h);
+    bottom: 0;
+    overflow-y: auto;
+    background: rgba(6, 7, 9, 0.96);
+    border-top: 1px solid var(--rule);
+    padding: 0.6rem 1rem 1rem;
+    pointer-events: auto;
+  }
   .k-dialogue {
     top: var(--stage-h);
     max-height: none;
@@ -671,7 +799,7 @@
   }
   .k-monitor {
     font-size: 0.78rem;
-    top: calc(var(--stage-h) * 0.06);
+    top: 3.5rem;
     padding: 0.8rem;
   }
 }
